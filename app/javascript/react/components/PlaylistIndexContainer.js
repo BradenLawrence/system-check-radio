@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react"
+import SubmissionTile from "./SubmissionTile"
 
 const PlaylistIndexContainer = (props) => {
   const defaultPlaylist = {
@@ -23,10 +24,7 @@ const PlaylistIndexContainer = (props) => {
   const submissionList = playlist.submissions.map(sub => {
     return(
       <li key={sub.id}>
-        <ul className="track-listing">
-          <li>Track name: {sub.track}</li>
-          <li>Description: {sub.description}</li>
-        </ul>
+        <SubmissionTile submission={sub} />
       </li>
     )
   })
