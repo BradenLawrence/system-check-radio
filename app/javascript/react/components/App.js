@@ -1,8 +1,7 @@
-import React from 'react'
-import { BrowserRouter, Route, Switch } from 'react-router-dom'
+import React from "react"
+import { BrowserRouter, Route, Switch } from "react-router-dom"
 
-import PlaylistIndexContainer from './PlaylistIndexContainer'
-
+import PlaylistIndexContainer from "./PlaylistIndexContainer"
 
 export const App = () => {
   return (
