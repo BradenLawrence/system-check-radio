@@ -1,0 +1,59 @@
+@import "colors";
+
+.full-page {
+  background-color: $yellow1;
+}
+
+.top-bar {
+  background-color: $grey5;
+  height: 6vh;
+  h1 {
+    font-size: 1em;
+    margin: 0 0 0 0;
+  }
+  a {
+    color: $grey1;
+  }
+}
+
+ul.login-section {
+  background-color: transparent;
+  list-style: none;
+  margin: 0 0 0 0;
+  li {
+    display: inline;
+    margin: 0 0 0 2vw;
+  }
+}
+
+.center-column {
+  height: 94vh;
+  padding: 1vh 1vw;
+  background-color: $blue1;
+  h1 {
+    text-align: center;
+  }
+  h2 {
+    font-size: 1.3em;
+  }
+  ul {
+    list-style: none;
+    margin: 0 3vw;
+    .track-listing {
+      list-style: none;
+      border-bottom: .1vh solid $blue5;
+      margin: 2vh 0 3vh 0;
+      li {
+        display: inline;
+        margin-right: 5vw;
+      }
+    }
+  }
+}
+
+@media only screen and (min-width: 600px) {
+  .center-column {
+    width: 75vw;
+    margin: 0 auto;
+  }
+}
