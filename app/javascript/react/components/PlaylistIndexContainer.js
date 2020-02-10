@@ -17,6 +17,7 @@ const PlaylistIndexContainer = (props) => {
       }
     })
     .then(json => setPlaylist(json))
+    .catch(error => console.error(`Error fetching playlists ${error.message}`))
   }, [])
 
   return(
