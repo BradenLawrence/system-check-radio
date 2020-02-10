@@ -8,7 +8,7 @@ export const App = () => {
     <BrowserRouter>
       <Switch>
         <Route exact path="/" component={PlaylistIndexContainer}/>
-        <Route exact path="/playlist" component={PlaylistIndexContainer}/>
+        <Route exact path="/playlists" component={PlaylistIndexContainer}/>
       </Switch>
     </BrowserRouter>
   )
