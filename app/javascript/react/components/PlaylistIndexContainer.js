@@ -11,7 +11,7 @@ const PlaylistIndexContainer = (props) => {
     fetch("/api/v1/playlists")
     .then(response => {
       if(response.ok) {
-        return response.json
+        return response.json()
       } else {
         throw new Error(`${response.status}: ${response.statusText}`)
       }
