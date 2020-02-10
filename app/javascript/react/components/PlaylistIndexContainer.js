@@ -20,8 +20,24 @@ const PlaylistIndexContainer = (props) => {
     .catch(error => console.error(`Error fetching playlists ${error.message}`))
   }, [])
 
+  const submissionList = playlist.submissions.map(sub => {
+    return(
+      <li key={sub.id}>
+        <ul className="track-listing">
+          <li>Track name: {sub.track}</li>
+          <li>Description: {sub.description}</li>
+        </ul>
+      </li>
+    )
+  })
+
   return(
-    <h1>Welcome to the Playlist Index!</h1>
+    <div className="center-column">
+      <h1>{ playlist.name }</h1>
+      <ul>
+        { submissionList }
+      </ul>
+    </div>
   )
 }
 
