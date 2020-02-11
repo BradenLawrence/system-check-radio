@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react"
 import SubmissionTile from "./SubmissionTile"
+import SearchBar from "./SearchBar"
 
 const PlaylistIndexContainer = (props) => {
   const defaultPlaylist = {
@@ -32,6 +33,7 @@ const PlaylistIndexContainer = (props) => {
   return(
     <div className="center-column">
       <h1>{ playlist.name }</h1>
+      <SearchBar />
       <ul>
         { submissionList }
       </ul>
