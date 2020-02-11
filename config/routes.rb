@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   namespace "api" do
     namespace "v1" do
       resources :playlists, only: [:index]
+      post "/songs", to: "songs#search"
     end
   end
 end
