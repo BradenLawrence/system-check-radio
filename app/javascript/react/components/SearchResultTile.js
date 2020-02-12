@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-const SearchResultTile = ({ result } ) => {
+const SearchResultTile = ({ result, handleCreateSubmission } ) => {
   const defaultSubmission = {
     ...result,
     description: ""
@@ -17,19 +17,8 @@ const SearchResultTile = ({ result } ) => {
   }
 
   const handleSubmit = (event) => {
-    debugger
     event.preventDefault()
-    let body = new FormData()
-    body.append("submissionData[image]", submissionData.image)
-    body.append("submissionData[name]", submissionData.name)
-    fetch("/api/v1/submissions", {
-      method: "POST",
-      credentials: "same-origin",
-      headers: {
-        "Accept": "application/json"
-      },
-      body: body
-    })
+    handleCreateSubmission(submissionData)
   }
 
   return(
@@ -55,7 +44,7 @@ const SearchResultTile = ({ result } ) => {
                 value={submissionData.description}
               />
             </label>
-            <input className="button" type="button" value="Submit" />
+            <input className="button" type="submit" value="Submit" />
           </form>
         </div>
       </div>
