@@ -27,6 +27,17 @@ const SearchBar = (props) => {
       },
       body: body
     })
+    .then(response => {
+      if(response.ok) {
+        return response.json()
+      } else {
+        throw new Error(response.status + ": " + response.statusText)
+      }
+    })
+    .then(json => {
+      props.handleSearchResults(json)
+    })
+    .catch(error => console.error("Error searching tracks: " + error.message))
   }
 
   return(
