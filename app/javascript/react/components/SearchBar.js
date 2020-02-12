@@ -41,18 +41,21 @@ const SearchBar = (props) => {
   }
 
   return(
-    <form onSubmit={handleSubmit}>
-      <label>
-        Search:
-        <input
-          name="term"
-          onChange={handleInput}
-          value={query.term}
-          placeholder="Type a song here"
-          type="text"
-        />
-      </label>
-      <input type="submit" value="Submit" />
+    <form onSubmit={handleSubmit} className="search">
+      <div className="row medium-unstack">
+        <label htmlFor="term" className="medium-2 columns">
+          Track
+        </label>
+          <input
+            name="term"
+            onChange={handleInput}
+            value={query.term}
+            placeholder="Type a song here"
+            type="text"
+            className="medium-8 columns "
+            />
+        <input type="submit" value="Search" className="medium-2 columns button primary"/>
+      </div>
     </form>
   )
 }
