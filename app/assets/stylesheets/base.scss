@@ -27,11 +27,12 @@ ul.login-section {
 }
 
 .center-column {
-  height: 94vh;
+  margin-top: 2vh;
   padding: 1vh 1vw;
-  background-color: $blue1;
+  background-color: $blue5;
   h1 {
     text-align: center;
+    color: white;
   }
   h2 {
     font-size: 1.3em;
@@ -41,13 +42,17 @@ ul.login-section {
     margin: 0 3vw;
     .track-listing {
       list-style: none;
-      border-bottom: .1vh solid $blue5;
+      border-bottom: .1vh solid $yellow5;
       margin: 2vh 0 3vh 0;
+      color: white;
       li {
         display: inline;
         margin-right: 5vw;
       }
     }
+  }
+  form {
+    margin: 0 3vw;
   }
 }
 
@@ -55,5 +60,51 @@ ul.login-section {
   .center-column {
     width: 75vw;
     margin: 0 auto;
+  }
+}
+
+.search > div {
+  label {
+    text-align: center;
+    font-size: 1em;
+    font-weight: bold;
+    padding: 0;
+    align-self: center;
+    color: white;
+  }
+  input {
+    padding: 0;
+    margin-bottom: 0;
+  }
+}
+
+.search-result {
+  border: 1px solid $blue5;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+  border-radius: .5rem;
+  background-color: $blue1;
+  margin: 1vh 0;
+  min-height: 13vh;
+  .album-cover {
+    align-self: center;
+    img {
+      border-radius: 2rem;
+    }
+  }
+  .track-info {
+    list-style: none;
+    padding: 0;
+    margin: 1vh 0;
+    align-self: center;
+    h3 {
+      font-size: 1.2em;
+      font-weight: bold;
+    }
+    .album-title {
+      font-size: .75em;
+    }
+    .artist-name {
+      font-size: .75em;
+    }
   }
 }
