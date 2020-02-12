@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react"
-import SubmissionTile from "./SubmissionTile"
 import SearchBar from "./SearchBar"
+import SearchResultTile from "./SearchResultTile"
+import SubmissionTile from "./SubmissionTile"
 
 const PlaylistIndexContainer = (props) => {
   const defaultPlaylist = {
@@ -50,6 +51,9 @@ const PlaylistIndexContainer = (props) => {
       <SearchBar
         handleSearchResults={handleSearchResults}
       />
+      <ul>
+        { searchResultsList }
+      </ul>
       <ul>
         { submissionList }
       </ul>
