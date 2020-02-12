@@ -22,7 +22,13 @@ ActiveRecord::Schema.define(version: 2020_02_10_175431) do
   end
 
   create_table "submissions", force: :cascade do |t|
-    t.string "track", null: false
+    t.string "name", null: false
+    t.string "artists", null: false
+    t.string "album", null: false
+    t.integer "duration_ms", null: false
+    t.string "image", null: false
+    t.string "preview_url", null: false
+    t.string "external_url", null: false
     t.text "description", null: false
     t.bigint "playlist_id", null: false
     t.datetime "created_at", null: false
