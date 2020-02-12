@@ -107,4 +107,12 @@ ul.login-section {
       font-size: .75em;
     }
   }
+  .result-actions {
+    form {
+      margin: 0;
+      input {
+        width: 100%;
+      }
+    }
+  }
 }
