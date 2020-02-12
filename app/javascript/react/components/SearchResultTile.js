@@ -9,7 +9,7 @@ const SearchResultTile = ({ result} ) => {
       <ul className="medium-10 columns track-info">
         <li><h3>{result.name}</h3></li>
         <li className="album-title">{result.album}</li>
-        <li className="artist-name">{result.artists}</li>
+        <li className="artist-name">{result.artists.join(", ")}</li>
       </ul>
     </div>
   )
