@@ -20,7 +20,13 @@ const PlaylistIndexContainer = (props) => {
         throw new Error(`${response.status}: ${response.statusText}`)
       }
     })
-    .then(json => setPlaylist(json))
+    .then(json => {
+      if(json) {
+        setPlaylist(json)
+      } else {
+        setPlaylist(defaultPlaylist)
+      }
+    })
     .catch(error => console.error(`Error fetching playlists ${error.message}`))
   }, [])
 
