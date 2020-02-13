@@ -23,13 +23,13 @@ default: &default
 
 development:
   <<: *default
-  database: mysterious-retreat-46342_development
+  database: system-check-radio_development
 
   # The specified database role being used to connect to postgres.
   # To create additional roles in postgres see `$ createuser --help`.
   # When left blank, postgres will use the default role. This is
   # the same name as the operating system user that initialized the database.
-  #username: mysterious-retreat-46342
+  #username: system-check-radio
 
   # The password associated with the postgres role (username).
   #password:
@@ -57,7 +57,7 @@ development:
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: mysterious-retreat-46342_test
+  database: system-check-radio_test
 
 # As with config/secrets.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
@@ -80,6 +80,6 @@ test:
 #
 production:
   <<: *default
-  database: mysterious-retreat-46342_production
-  username: mysterious-retreat-46342
-  password: <%= ENV['MYSTERIOUS-RETREAT-46342_DATABASE_PASSWORD'] %>
+  database: system-check-radio_production
+  username: system-check-radio
+  password: <%= ENV['SYSTEM-CHECK-RADIO_DATABASE_PASSWORD'] %>
