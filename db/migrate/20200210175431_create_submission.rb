@@ -9,6 +9,7 @@ class CreateSubmission < ActiveRecord::Migration[5.2]
       t.string :image, null: false
       t.string :name, null: false
       t.string :preview_url, null: false
+      t.string :track_id, null: false
       t.belongs_to :playlist, null: false
 
       t.timestamps null: false
