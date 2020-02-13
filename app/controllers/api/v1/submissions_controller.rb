@@ -18,7 +18,7 @@ class Api::V1::SubmissionsController < ApplicationController
   def create_params
     params.require(:submissionData).permit(
       :album, :artists, :description, :duration_ms, :external_url, :image,
-      :name, :preview_url
+      :name, :preview_url, :track_id
     )
   end
 end
