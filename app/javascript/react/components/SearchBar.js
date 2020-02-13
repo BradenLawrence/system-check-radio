@@ -52,7 +52,7 @@ const SearchBar = (props) => {
             value={query.term}
             placeholder="Type a song here"
             type="text"
-            className="medium-8 columns "
+            className="medium-8 columns"
             />
         <input type="submit" value="Search" className="medium-2 columns button primary"/>
       </div>
