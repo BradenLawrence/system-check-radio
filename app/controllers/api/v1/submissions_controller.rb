@@ -8,9 +8,8 @@ class Api::V1::SubmissionsController < ApplicationController
     if submission.save
       render json: submission.playlist
     else
-      render json: submission.errors.full_messages
+      render json: {errors: submission.errors.full_messages}
     end
-
   end
 
   private
