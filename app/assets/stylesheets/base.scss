@@ -37,29 +37,60 @@ ul.login-section {
   h2 {
     font-size: 1.3em;
   }
+  .errors {
+    background-color: $red2;
+    margin: 1vh 3vw;
+    border-radius: .35rem;
+    text-align: center;
+    color: white;
+    font-weight: 500;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  }
   ul {
     list-style: none;
-    margin: 0 3vw;
-    .track-listing {
-      list-style: none;
-      border-bottom: .1vh solid $yellow5;
-      margin: 2vh 0 3vh 0;
-      color: white;
-      li {
-        display: inline;
-        margin-right: 5vw;
-      }
-    }
+    margin-left: 0;
   }
   form {
     margin: 0 3vw;
   }
 }
 
-@media only screen and (min-width: 600px) {
-  .center-column {
-    width: 75vw;
-    margin: 0 auto;
+.submission-listing {
+  margin: 0 3vw;
+  padding: 2vh 0;
+  border-bottom: 1px solid $blue4;
+  .submission-play {
+    align-self: flex-end;
+    text-align: center;
+    a > i {
+      font-size: 2em;
+      color: white;
+    }
+    .play-button {
+      background-color: $blue1;
+      padding: 1vh 1vw;
+      border-radius: .35rem;
+    }
+  }
+  .submission-info {
+    color: white;
+    .submission-name {
+      font-weight: 500;
+    }
+    .submission-details {
+      font-size: .75em;
+    }
+  }
+  .submission-vote {
+    text-align: center;
+    color: $blue3;
+    .fa {
+      margin: 0 .5vw;
+    }
+  }
+  .submission-description {
+    font-style: italic;
+    color: white;
   }
 }
 
@@ -73,7 +104,7 @@ ul.login-section {
     color: white;
   }
   input {
-    padding: 0;
+    padding: 2vh 2vw;
     margin-bottom: 0;
   }
 }
@@ -114,5 +145,16 @@ ul.login-section {
         width: 100%;
       }
     }
+  }
+}
+
+@media only screen and (min-width: 640px) {
+  .center-column {
+    width: 75vw;
+    margin: 0 auto;
+  }
+  .search > div > input {
+    padding: 0 2vw;
+    margin-bottom: 0;
   }
 }
