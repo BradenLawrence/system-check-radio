@@ -20,4 +20,5 @@ class Api::V1::SubmissionsController < ApplicationController
       :name, :preview_url, :track_id
     )
   end
+  
 end
