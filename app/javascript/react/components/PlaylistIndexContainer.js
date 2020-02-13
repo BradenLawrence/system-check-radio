@@ -44,6 +44,7 @@ const PlaylistIndexContainer = (props) => {
     body.append("submissionData[image]", submissionData.image)
     body.append("submissionData[name]", submissionData.name)
     body.append("submissionData[preview_url]", submissionData.preview_url)
+    body.append("submissionData[track_id]", submissionData.id)
     fetch("/api/v1/submissions", {
       method: "POST",
       credentials: "same-origin",
