@@ -10,6 +10,7 @@ const PlaylistIndexContainer = (props) => {
   }
   const [playlist, setPlaylist] = useState(defaultPlaylist)
   const [searchResults, setSearchResults] = useState([])
+  const [errors, setErrors] = useState([])
 
   useEffect(() => {
     fetch("/api/v1/playlists")
@@ -61,8 +62,12 @@ const PlaylistIndexContainer = (props) => {
       }
     })
     .then(json => {
-      setPlaylist(json)
-      setSearchResults([])
+      if(json.errors) {
+        setErrors(json.errors)
+      } else {
+        setPlaylist(json)
+        setSearchResults([])
+      }
     })
     .catch(error => console.error("Error searching tracks: " + error.message))
   }
@@ -90,6 +95,9 @@ const PlaylistIndexContainer = (props) => {
   return(
     <div className="center-column">
       <h1>{ playlist.name }</h1>
+      <ul className="errors">
+        { errors }
+      </ul>
       <SearchBar
         handleSearchResults={handleSearchResults}
       />
