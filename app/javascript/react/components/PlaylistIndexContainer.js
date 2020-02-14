@@ -9,6 +9,7 @@ const PlaylistIndexContainer = (props) => {
     submissions: []
   }
   const [playlist, setPlaylist] = useState(defaultPlaylist)
+  const [submissions, setSubmissions] = useState([])
   const [searchResults, setSearchResults] = useState([])
   const [errors, setErrors] = useState([])
 
@@ -24,6 +25,7 @@ const PlaylistIndexContainer = (props) => {
     .then(json => {
       if(json) {
         setPlaylist(json)
+        setSubmissions(json.submissions)
       } else {
         setPlaylist(defaultPlaylist)
       }
@@ -65,7 +67,7 @@ const PlaylistIndexContainer = (props) => {
       if(json.errors) {
         setErrors(json.errors)
       } else {
-        setPlaylist(json)
+        setSubmissions(submissions.concat(json))
         setSearchResults([])
       }
     })
@@ -83,10 +85,22 @@ const PlaylistIndexContainer = (props) => {
     )
   })
 
-  const submissionList = playlist.submissions.map(sub => {
+  const submissionList = submissions.map(sub => {
+    const removeSubmission = () => {
+      let subToRemove = submissions.find(item => item.id === sub.id)
+      let indexToRemove = submissions.indexOf(subToRemove)
+      setSubmissions([
+        ...submissions.slice(0, indexToRemove),
+        ...submissions.slice(indexToRemove+1)
+      ])
+    }
+
     return(
       <li key={sub.id}>
-        <SubmissionTile submission={sub} />
+        <SubmissionTile
+          submission={sub}
+          removeSubmission={removeSubmission}
+        />
       </li>
     )
   })
