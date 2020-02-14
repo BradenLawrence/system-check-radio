@@ -6,7 +6,7 @@ class Api::V1::SubmissionsController < ApplicationController
     submission.playlist = Playlist.last
 
     if submission.save
-      render json: submission.playlist
+      render json: submission
     else
       render json: { errors: submission.errors.full_messages }
     end
@@ -16,6 +16,16 @@ class Api::V1::SubmissionsController < ApplicationController
     changes = submission_params
     submission = Submission.find(params["id"])
     if submission.update_attributes(changes)
+      render json: submission
+    else
+      render json: { errors: submission.errors.full_messages }
+    end
+  end
+
+  def destroy
+    submission = Submission.find(params["id"])
+
+    if submission.destroy
       render json: submission
     else
       render json: { errors: submission.errors.full_messages }

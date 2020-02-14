@@ -57,7 +57,7 @@ ul.login-section {
 
 .submission-listing {
   margin: 0 3vw;
-  padding: 2vh 0;
+  padding: 0 0 2vh;
   border-bottom: 1px solid $blue4;
   .submission-play {
     align-self: flex-end;
@@ -150,6 +150,22 @@ ul.login-section {
       border-radius: 1rem;
     }
   }
+  .delete-area {
+    height: 3vh;
+    .delete-btn {
+      color: white;
+      background-color: $red2;
+      font-size: .8em;
+      padding: .4vh 2vw;
+      border-radius: .25rem;
+    }
+    .delete-btn:hover {
+      color: $red2;
+      background-color: white;
+      cursor: pointer;
+    }
+  }
+
 }
 
 .search > div {
