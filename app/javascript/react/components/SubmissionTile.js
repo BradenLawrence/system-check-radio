@@ -20,7 +20,6 @@ const SubmissionTile = (props) => {
       },
       body: JSON.stringify({
         submissionData: {
-          id: submission.id,
           description: descriptionInput
         }
       })

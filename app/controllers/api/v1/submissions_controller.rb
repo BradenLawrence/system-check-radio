@@ -14,8 +14,7 @@ class Api::V1::SubmissionsController < ApplicationController
 
   def update
     changes = submission_params
-    submission = Submission.find(changes["id"])
-
+    submission = Submission.find(params["id"])
     if submission.update_attributes(changes)
       render json: submission
     else
