@@ -30,27 +30,28 @@ RSpec.describe Api::V1::SubmissionsController, type: :controller do
         expect(next_count).to eq(previous_count + 1)
       end
 
-      it "should return the playlist it was assigned to" do
+      it "should return the submission that was posted" do
         post :create, params: {submissionData: submission1}, format: :json
 
         returned_json = JSON.parse(response.body)
-        expect(returned_json["name"]).to eq(playlist1.name)
+        expect(returned_json["name"]).to eq(submission1[:name])
       end
 
-      it "should be present on the returned playlist" do
+      it "should be present on the playlist it was posted to" do
         post :create, params: {submissionData: submission1}, format: :json
 
-        returned_sub = JSON.parse(response.body)["submissions"].last
+        returned_sub = JSON.parse(response.body)
+        newest_sub = Playlist.find_by(name: playlist1.name).submissions.last
 
-        expect(returned_sub["name"]).to eq(submission1[:name])
-        expect(returned_sub["artists"]).to eq(submission1[:artists])
-        expect(returned_sub["album"]).to eq(submission1[:album])
-        expect(returned_sub["duration_ms"]).to eq(submission1[:duration_ms])
-        expect(returned_sub["image"]).to eq(submission1[:image])
-        expect(returned_sub["preview_url"]).to eq(submission1[:preview_url])
-        expect(returned_sub["external_url"]).to eq(submission1[:external_url])
-        expect(returned_sub["description"]).to eq(submission1[:description])
-        expect(returned_sub["track_id"]).to eq(submission1[:track_id])
+        expect(returned_sub["name"]).to eq(newest_sub[:name])
+        expect(returned_sub["artists"]).to eq(newest_sub[:artists])
+        expect(returned_sub["album"]).to eq(newest_sub[:album])
+        expect(returned_sub["duration_ms"]).to eq(newest_sub[:duration_ms])
+        expect(returned_sub["image"]).to eq(newest_sub[:image])
+        expect(returned_sub["preview_url"]).to eq(newest_sub[:preview_url])
+        expect(returned_sub["external_url"]).to eq(newest_sub[:external_url])
+        expect(returned_sub["description"]).to eq(newest_sub[:description])
+        expect(returned_sub["track_id"]).to eq(newest_sub[:track_id])
       end
     end
 
@@ -115,6 +116,22 @@ RSpec.describe Api::V1::SubmissionsController, type: :controller do
 
         expect(new_description).to eq(update_payload[:submissionData][:description])
         expect(new_description).to_not eq(old_description)
+      end
+    end
+  end
+
+  describe "DELETE#destroy" do
+    context "Delete was successful" do
+      it "should remove the submission from the database" do
+        post :create, params: {submissionData: submission1}, format: :json
+
+        submission_to_delete = Submission.find_by(name: submission1[:name])
+        previous_count = Submission.all.length
+
+        delete :destroy, params: {id: submission_to_delete.id}, format: :json
+        next_count = Submission.all.length
+
+        expect(next_count).to eq(previous_count-1)
       end
     end
   end
