@@ -92,6 +92,56 @@ ul.login-section {
     font-style: italic;
     color: white;
   }
+  .submission-user-content {
+    padding-right: 0;
+    .submission-description {
+      border-radius: 2.4375rem;
+      padding: 7px .5rem;
+    }
+    .submission-form-area {
+      padding-left: 0;
+    }
+    .submission-edit-form {
+      margin-left: 0;
+      padding-left: 0;
+      input, button {
+        border: 0px;
+      }
+      input[type=text] {
+        font-style: italic;
+        border-radius: 2.4375rem;
+        padding-left: 1rem;
+        margin-bottom: 0;
+      }
+    }
+    button.edit-btn {
+      outline: none;
+      margin: 8px 1vw 8px 0;
+    }
+    .edit-btn {
+      height: 1.5rem;
+      width: 1.5rem;
+    }
+    .edit-active {
+      color: $blue1;
+      background-color: white;
+      border-radius: 2.4375rem;
+    }
+    .edit-inactive {
+      color: white;
+    }
+    .check-btn {
+      color: $yellow3;
+      font-size: 1.2em;
+      text-align: center;
+    }
+    .check-btn:hover {
+      cursor: pointer;
+      color: white;
+      background-color: $yellow3;
+      border-radius: 1rem;
+    }
+  }
 }
 
 .search > div {
