@@ -56,7 +56,7 @@ const SubmissionTile = (props) => {
   const editButtonState = editEnabled ? "edit-active" : "edit-inactive"
 
   const editButton = (
-    <div className="submission-edit small-1 columns">
+    <div className="submission-edit small-2 large-1 columns">
       <button
         className={`edit-btn ${editButtonState}`}
         type="button"
@@ -71,7 +71,7 @@ const SubmissionTile = (props) => {
 
   if(editEnabled) {
     descriptionArea = (
-      <div className="submission-form-area small-11 columns">
+      <div className="submission-form-area small-10 large-11 columns">
         <form className="submission-edit-form row align-justify" onSubmit={ handleEditSave }>
           <input
             name="description"
@@ -84,14 +84,14 @@ const SubmissionTile = (props) => {
             type="submit"
             className="small-2 columns check-btn"
           >
-            <i class="fa fa-check"></i>
+            <i className="fa fa-check"></i>
           </button>
         </form>
       </div>
     )
   } else {
     descriptionArea = (
-      <div className="small-11 columns submission-description">"{submission.description}"</div>
+      <div className="small-10 large-11 columns submission-description">"{submission.description}"</div>
     )
   }
 

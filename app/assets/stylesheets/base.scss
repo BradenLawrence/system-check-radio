@@ -101,6 +101,9 @@ ul.login-section {
     .submission-form-area {
       padding-left: 0;
     }
+    .submission-edit {
+      text-align: right;
+    }
     .submission-edit-form {
       margin-left: 0;
       padding-left: 0;
@@ -123,12 +126,17 @@ ul.login-section {
       width: 1.5rem;
     }
     .edit-active {
-      color: $blue1;
-      background-color: white;
+      color: white;
+      background-color: $blue1;
       border-radius: 2.4375rem;
     }
     .edit-inactive {
       color: white;
+    }
+    .edit-inactive:hover {
+      color: $blue1;
+      background-color: white;
+      border-radius: 2.4375rem;
     }
     .check-btn {
       color: $yellow3;
