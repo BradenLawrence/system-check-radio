@@ -67,13 +67,6 @@ const SubmissionTile = (props) => {
     </div>
   )
 
-
-  // <input
-  //   type="submit"
-  //   value="Delete Submission"
-  //   onClick={handleDelete}
-  // />
-
   let descriptionArea
 
   if(editEnabled) {
