@@ -49,7 +49,29 @@ const SubmissionTile = (props) => {
 
   const handleDelete = (event) => {
     event.preventDefault()
-    console.log("Delete Submission")
+    fetch(`/api/v1/submissions/${submission.id}`, {
+      credentials: "same-origin",
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      }
+    })
+    .then(response => {
+      if(response.ok) {
+        return response.json()
+      } else {
+        throw new Error(response.status + ": " + response.statusText)
+      }
+    })
+    .then(deleted_submission => {
+      if(deleted_submission.errors) {
+        setErrors(updated_submission.errors)
+      } else {
+        props.removeSubmission()
+      }
+    })
+    .catch(error => console.error("Error deleting submission: " + error.message))
   }
 
   const editButtonState = editEnabled ? "edit-active" : "edit-inactive"
@@ -94,8 +116,27 @@ const SubmissionTile = (props) => {
     )
   }
 
+  let deleteButton
+
+  if(editEnabled) {
+    deleteButton = (
+      <button
+        type="submit"
+        className="delete-btn"
+        onClick={handleDelete}
+      >
+        <i className="fa fa-times"></i>
+      </button>
+    )
+  }
+
   return(
     <div className="submission-listing">
+      <div className="row align-right">
+        <div className="delete-area small-2 columns">
+          { deleteButton }
+        </div>
+      </div>
       <div className="row">
         <div className="submission-play small-3 medium-2 columns">
           <a href={submission.preview_url}>
