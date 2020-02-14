@@ -25,7 +25,7 @@ describe("SubmissionTile", () => {
   })
 
   it("should render a submission-description containing a description of the track", () => {
-    expect(wrapper.find("li.submission-description").text()).toBe('"go"')
+    expect(wrapper.find("div.submission-description").text()).toBe('"go"')
   })
 
   it("should render a submission-details containing a description of the track", () => {

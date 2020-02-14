@@ -91,7 +91,6 @@ const PlaylistIndexContainer = (props) => {
     )
   })
 
-
   return(
     <div className="center-column">
       <h1>{ playlist.name }</h1>
