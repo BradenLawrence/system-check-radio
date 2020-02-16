@@ -2,6 +2,7 @@ import React from "react"
 import { BrowserRouter, Route, Switch } from "react-router-dom"
 
 import PlaylistIndexContainer from "./PlaylistIndexContainer"
+import UsersIndexContainer from "./UsersIndexContainer"
 
 export const App = () => {
   return (
@@ -9,6 +10,8 @@ export const App = () => {
       <Switch>
         <Route exact path="/" component={PlaylistIndexContainer}/>
         <Route exact path="/playlists" component={PlaylistIndexContainer}/>
+        <Route exact path="/users" component={UsersIndexContainer}/>
+        <Route exact path="/users/:id" component={UsersShowContainer}/>
       </Switch>
     </BrowserRouter>
   )
