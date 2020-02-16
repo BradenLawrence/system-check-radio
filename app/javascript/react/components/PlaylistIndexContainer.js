@@ -19,7 +19,7 @@ const PlaylistIndexContainer = (props) => {
       if(response.ok) {
         return response.json()
       } else {
-        throw new Error(`${response.status}: ${response.statusText}`)
+        throw new Error(response.status + ": " + response.statusText)
       }
     })
     .then(json => {
@@ -30,7 +30,7 @@ const PlaylistIndexContainer = (props) => {
         setPlaylist(defaultPlaylist)
       }
     })
-    .catch(error => console.error(`Error fetching playlists ${error.message}`))
+    .catch(error => console.error("Error searching tracks: " + error.message))
   }, [])
 
   const handleSearchResults = (results) => {
