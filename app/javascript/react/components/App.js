@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Switch } from "react-router-dom"
 
 import PlaylistIndexContainer from "./PlaylistIndexContainer"
 import UsersIndexContainer from "./UsersIndexContainer"
+import UsersShowContainer from "./UsersShowContainer"
 
 export const App = () => {
   return (
