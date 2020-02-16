@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   devise_for :users
 
   get "/playlists", to: "static_pages#index"
+  resources :users, only: [:index, :show]
 
   namespace "api" do
     namespace "v1" do

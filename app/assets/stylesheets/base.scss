@@ -37,15 +37,6 @@ ul.login-section {
   h2 {
     font-size: 1.3em;
   }
-  .errors {
-    background-color: $red2;
-    margin: 1vh 3vw;
-    border-radius: .35rem;
-    text-align: center;
-    color: white;
-    font-weight: 500;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-  }
   ul {
     list-style: none;
     margin-left: 0;
@@ -231,4 +222,22 @@ ul.login-section {
     padding: 0 2vw;
     margin-bottom: 0;
   }
+}
+
+.errors, .flash {
+  background-color: $red2;
+  margin: 1vh 3vw;
+  border-radius: .35rem;
+  text-align: center;
+  color: white;
+  font-weight: 500;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+}
+
+.flash-notice {
+  background-color: $blue2;
+}
+
+.errors, .flash-alert {
+  background-color: $red2;
 }
