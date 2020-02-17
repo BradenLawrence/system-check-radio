@@ -2,6 +2,8 @@ require 'rails_helper'
 
 RSpec.describe Api::V1::SubmissionsController, type: :controller do
   let!(:playlist1) { Playlist.create(name: "Heavy Metal Jazz")}
+  let!(:user1) { FactoryBot.create(:user) }
+  let!(:user2) { FactoryBot.create(:user) }
   let!(:submission1) { {
     name: "Africa",
     artists: "TOTO",
@@ -12,15 +14,18 @@ RSpec.describe Api::V1::SubmissionsController, type: :controller do
     external_url: "https://open.spotify.com/track/2374M0fQpWi3dLnB54qaLX",
     description: "go",
     track_id: "2374M0fQpWi3dLnB54qaLX",
-    playlist: playlist1
+    playlist: playlist1,
+    user: user1
   } }
   let!(:submission2_missing_params) { {
-    playlist: playlist1
+    playlist: playlist1,
+    user: user1
   } }
 
   describe "POST#create" do
     context "Post was successful" do
       it "should persist in the database" do
+        sign_in user1
         previous_count = Submission.all.count
         post :create, params: {submissionData: submission1}, format: :json
         next_count = Submission.all.count
@@ -31,6 +36,7 @@ RSpec.describe Api::V1::SubmissionsController, type: :controller do
       end
 
       it "should return the submission that was posted" do
+        sign_in user1
         post :create, params: {submissionData: submission1}, format: :json
 
         returned_json = JSON.parse(response.body)
@@ -38,6 +44,7 @@ RSpec.describe Api::V1::SubmissionsController, type: :controller do
       end
 
       it "should be present on the playlist it was posted to" do
+        sign_in user1
         post :create, params: {submissionData: submission1}, format: :json
 
         returned_sub = JSON.parse(response.body)
@@ -57,6 +64,7 @@ RSpec.describe Api::V1::SubmissionsController, type: :controller do
 
     context "Post was unsuccessful"
       it "should not be saved" do
+        sign_in user1
         previous_count = Submission.all.count
         post :create, params: {
           submissionData: submission2_missing_params
@@ -67,6 +75,7 @@ RSpec.describe Api::V1::SubmissionsController, type: :controller do
       end
 
       it "should return errors" do
+        sign_in user1
         post :create, params: {
           submissionData: submission2_missing_params
         }, format: :json
@@ -85,6 +94,7 @@ RSpec.describe Api::V1::SubmissionsController, type: :controller do
       end
 
       it "should not save duplicate songs to the same playlist" do
+        sign_in user1
         previous_count = Submission.all.count
         post :create, params: {submissionData: submission1}, format: :json
         post :create, params: {submissionData: submission1}, format: :json
@@ -96,11 +106,24 @@ RSpec.describe Api::V1::SubmissionsController, type: :controller do
 
         expect(returned_json.include?("Track has already been taken")).to be(true)
       end
+
+      it "should not save if user is not signed in" do
+        previous_count = Submission.all.count
+        post :create, params: {submissionData: submission1}, format: :json
+        next_count = Submission.all.count
+
+        expect(next_count).to eq(previous_count)
+
+        returned_json = JSON.parse(response.body)["errors"]
+
+        expect(returned_json.include?("You must be signed in to make a submission")).to be(true)
+      end
   end
 
   describe "PATCH#update" do
     context "Update was successful" do
       it "should save changes in the database" do
+        sign_in user1
         post :create, params: {submissionData: submission1}, format: :json
         old_description = Submission.last.description
 
@@ -118,11 +141,39 @@ RSpec.describe Api::V1::SubmissionsController, type: :controller do
         expect(new_description).to_not eq(old_description)
       end
     end
+
+    context "Update was unsuccessful" do
+      it "should not save if the user is not the author of the submission" do
+        sign_in user1
+        post :create, params: {submissionData: submission1}, format: :json
+        old_description = Submission.last.description
+
+        sign_out user1
+        sign_in user2
+
+        update_payload = {
+          id: Submission.last.id,
+          submissionData: {
+            description: "stop"
+          }
+        }
+
+        patch :update, params: update_payload, format: :json
+        new_description = Submission.last.description
+
+        expect(new_description).to eq(old_description)
+
+        returned_json = JSON.parse(response.body)["errors"]
+
+        expect(returned_json.include?("You are not authorized to edit this submission.")).to be(true)
+      end
+    end
   end
 
   describe "DELETE#destroy" do
     context "Delete was successful" do
       it "should remove the submission from the database" do
+        sign_in user1
         post :create, params: {submissionData: submission1}, format: :json
 
         submission_to_delete = Submission.find_by(name: submission1[:name])
@@ -132,6 +183,28 @@ RSpec.describe Api::V1::SubmissionsController, type: :controller do
         next_count = Submission.all.length
 
         expect(next_count).to eq(previous_count-1)
+      end
+    end
+
+    context "Delete was unsuccessful" do
+      it "should not remove the submission if user is not the author" do
+        sign_in user1
+        post :create, params: {submissionData: submission1}, format: :json
+
+        submission_to_delete = Submission.find_by(name: submission1[:name])
+        previous_count = Submission.all.length
+
+        sign_out user1
+        sign_in user2
+
+        delete :destroy, params: {id: submission_to_delete.id}, format: :json
+        next_count = Submission.all.length
+
+        expect(next_count).to eq(previous_count)
+
+        returned_json = JSON.parse(response.body)["errors"]
+
+        expect(returned_json.include?("You are not authorized to delete this submission.")).to be(true)
       end
     end
   end
