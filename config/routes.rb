@@ -9,6 +9,7 @@ Rails.application.routes.draw do
     namespace "v1" do
       resources :playlists, only: [:index]
       resources :submissions, only: [:create, :update, :destroy]
+      resources :users, only: [:index]
       post "/songs", to: "songs#search"
     end
   end
