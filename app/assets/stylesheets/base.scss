@@ -36,6 +36,8 @@ ul.login-section {
   }
   h2 {
     font-size: 1.3em;
+    color: white;
+    margin: 0 3vw;
   }
   ul {
     list-style: none;
@@ -167,13 +169,21 @@ ul.login-section {
     color: white;
     font-weight: bold;
   }
-  .name-col, .submission-col {
+  .name-col, .submission-col, .date-col {
+    color: white;
     a {
       color: white;
     }
   }
   .submission-col, .member-col {
     text-align: center;
+  }
+  .category-empty {
+    color: white;
+    opacity: .5;
+    text-align: center;
+    font-style: italic;
+    padding: 5vh 0
   }
 }
 .category-listing:hover {
