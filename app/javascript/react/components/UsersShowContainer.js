@@ -6,7 +6,7 @@ const UsersShowContainer = (props) => {
     submissions: []
   }
   const [user, setUser] = useState(defaultUser)
-  const [errors, setErrors] = userState([])
+  const [errors, setErrors] = useState([])
 
   useEffect(() => {
     fetch(`/api/v1${props.location.pathname}`)
@@ -49,7 +49,6 @@ const UsersShowContainer = (props) => {
     if(user.isCurrentUser) {
       authorDisplay = "You have"
     } else {
-      debugger
       authorDisplay = user.name + " has"
     }
     submissionList = (
