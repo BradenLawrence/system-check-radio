@@ -47,9 +47,8 @@ ul.login-section {
   }
 }
 
-.submission-listing {
+.category-listing {
   margin: 0 3vw;
-  padding: 0 0 2vh;
   border-bottom: 1px solid $blue4;
   .submission-play {
     align-self: flex-end;
@@ -146,9 +145,6 @@ ul.login-section {
       border-radius: 1rem;
     }
   }
-  .submision-top-bar {
-    // margin: 1vh;
-  }
   .delete-area {
     height: 5.5vh;
     .delete-btn {
@@ -167,7 +163,25 @@ ul.login-section {
       cursor: pointer;
     }
   }
+  .header-col {
+    color: white;
+    font-weight: bold;
+  }
+  .name-col, .submission-col {
+    a {
+      color: white;
+    }
+  }
+  .submission-col, .member-col {
+    text-align: center;
+  }
+}
+.category-listing:hover {
+  background-color: $blue4;
+}
 
+.track {
+  padding: 0 0 2vh;
 }
 
 .search > div {
