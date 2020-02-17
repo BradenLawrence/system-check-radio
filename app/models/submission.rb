@@ -9,6 +9,7 @@ class Submission < ApplicationRecord
   validates :preview_url, presence: true
   validates :track_id, presence: true
 
+  belongs_to :user
   belongs_to :playlist
   validates_uniqueness_of :track_id, scope: :playlist_id
 end

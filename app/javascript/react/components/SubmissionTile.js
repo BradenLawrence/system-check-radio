@@ -4,6 +4,7 @@ const SubmissionTile = (props) => {
   const [submission, setSubmission] = useState(props.submission)
   const [descriptionInput, setDescriptionInput] = useState(submission.description)
   const [editEnabled, setEditEnabled] = useState(false)
+  const [errors, setErrors] = useState([])
 
   const handleInputChange = (event) => {
     setDescriptionInput(event.currentTarget.value)
@@ -45,6 +46,7 @@ const SubmissionTile = (props) => {
   const handleEditToggle = (event) => {
     event.preventDefault()
     setEditEnabled(!editEnabled)
+    setErrors([])
   }
 
   const handleDelete = (event) => {
@@ -76,8 +78,9 @@ const SubmissionTile = (props) => {
 
   const editButtonState = editEnabled ? "edit-active" : "edit-inactive"
 
-  const editButton = (
-    <div className="submission-edit small-2 large-1 columns">
+  let editButton
+  if(submission.isCurrentUser || submission.isAdmin) {
+    editButton = (
       <button
         className={`edit-btn ${editButtonState}`}
         type="button"
@@ -85,14 +88,24 @@ const SubmissionTile = (props) => {
       >
         <i className="fa fa-pencil"></i>
       </button>
-    </div>
-  )
+    )
+  } else {
+    editButton = (
+      <div className="edit-btn"></div>
+    )
+  }
+
+  let author
+  if(submission.isCurrentUser) {
+    author = "You"
+  } else {
+    author = submission.author
+  }
 
   let descriptionArea
-
   if(editEnabled) {
     descriptionArea = (
-      <div className="submission-form-area small-10 large-11 columns">
+      <div className="submission-form-area">
         <form className="submission-edit-form row align-justify" onSubmit={ handleEditSave }>
           <input
             name="description"
@@ -112,7 +125,9 @@ const SubmissionTile = (props) => {
     )
   } else {
     descriptionArea = (
-      <div className="small-10 large-11 columns submission-description">"{submission.description}"</div>
+      <div className="submission-description">
+        "{submission.description}"
+      </div>
     )
   }
 
@@ -133,6 +148,11 @@ const SubmissionTile = (props) => {
   return(
     <div className="submission-listing">
       <div className="row align-right">
+        <div className="submision-top-bar small-10 columns">
+          <ul className="errors">
+            { errors }
+          </ul>
+        </div>
         <div className="delete-area small-2 columns">
           { deleteButton }
         </div>
@@ -154,8 +174,13 @@ const SubmissionTile = (props) => {
           <i className="fa fa-thumbs-down"></i>
         </div>
         <div className="submission-user-content small-9 medium-10 columns row align-justify align-middle">
-          { editButton }
-          { descriptionArea }
+          <div className="submission-edit small-2 large-1 columns">
+            { editButton }
+          </div>
+          <div className="small-10 large-11 columns">
+            { descriptionArea }
+            <div className="author-name">-{ author } said on { submission.updated_at }</div>
+          </div>
         </div>
       </div>
     </div>

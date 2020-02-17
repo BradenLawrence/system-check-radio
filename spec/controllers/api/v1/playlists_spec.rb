@@ -4,6 +4,7 @@ RSpec.describe Api::V1::PlaylistsController, type: :controller do
   describe "GET#index" do
     let!(:playlist1) { Playlist.create(name: "Technofolk")}
     let!(:playlist2) { Playlist.create(name: "Heavy Metal Jazz")}
+    let!(:user1) { FactoryBot.create(:user) }
     let!(:submission1) { Submission.create(
       name: "Africa",
       artists: "TOTO",
@@ -14,7 +15,8 @@ RSpec.describe Api::V1::PlaylistsController, type: :controller do
       external_url: "https://open.spotify.com/track/2374M0fQpWi3dLnB54qaLX",
       description: "go",
       track_id: "2374M0fQpWi3dLnB54qaLX",
-      playlist: playlist2
+      playlist: playlist2,
+      user: user1
     )}
 
     it "should return the most recently created playlist" do
