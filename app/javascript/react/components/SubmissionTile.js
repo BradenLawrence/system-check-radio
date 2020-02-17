@@ -146,7 +146,7 @@ const SubmissionTile = (props) => {
   }
 
   return(
-    <div className="submission-listing">
+    <div className="category-listing track">
       <div className="row align-right">
         <div className="submision-top-bar small-10 columns">
           <ul className="errors">
