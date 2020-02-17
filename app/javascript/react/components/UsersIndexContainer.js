@@ -3,6 +3,7 @@ import { Link } from "react-router-dom"
 
 const UsersIndexContainer = (props) => {
   const [users, setUsers] = useState([])
+  const [errors, setErrors] = useState([])
 
   useEffect(() => {
     fetch("/api/v1/users")
@@ -14,7 +15,9 @@ const UsersIndexContainer = (props) => {
       }
     })
     .then(json => {
-      if(json) {
+      if(json.errors) {
+        setErrors([...json.errors])
+      } else if(json) {
         setUsers(json)
       } else {
         setUsers([])
