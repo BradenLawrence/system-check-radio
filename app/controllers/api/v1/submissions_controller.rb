@@ -3,7 +3,6 @@ class Api::V1::SubmissionsController < ApplicationController
 
   def create
     if current_user != nil
-      binding.pry
       submission = Submission.new(submission_params)
       submission.playlist = Playlist.last
       submission.user = current_user
