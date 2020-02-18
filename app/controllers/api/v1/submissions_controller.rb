@@ -2,7 +2,14 @@ class Api::V1::SubmissionsController < ApplicationController
   protect_from_forgery unless: -> { request.format.json? }
 
   def create
-    if current_user != nil
+    error_list = []
+    if current_user.nil?
+      error_list << "You must be signed in to make a submission"
+    end
+    if current_user && !current_user.member
+      error_list << "You must be an active member to make a submission"
+    end
+    unless error_list.length > 0
       submission = Submission.new(submission_params)
       submission.playlist = Playlist.last
       submission.user = current_user
@@ -12,7 +19,7 @@ class Api::V1::SubmissionsController < ApplicationController
         render json: { errors: submission.errors.full_messages }
       end
     else
-      render json: { errors: "You must be signed in to make a submission" }
+      render json: { errors: error_list }
     end
   end
 
