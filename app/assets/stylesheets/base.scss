@@ -6,13 +6,26 @@
 
 .top-bar {
   background-color: $grey5;
-  height: 6vh;
   h1 {
     font-size: 1em;
+    font-weight: bold;
     margin: 0 0 0 0;
   }
   a {
     color: $grey1;
+  }
+  ul {
+    background-color: transparent;
+  }
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.top-bar-nav {
+  font-size: 1em;
+  margin: 0 0 0 0;
+  li {
+    list-style: none;
   }
 }
 
@@ -20,9 +33,10 @@ ul.login-section {
   background-color: transparent;
   list-style: none;
   margin: 0 0 0 0;
+  text-align: right;
   li {
     display: inline;
-    margin: 0 0 0 2vw;
+    margin: 0 2vw 0 0;
   }
 }
 
@@ -169,7 +183,7 @@ ul.login-section {
     color: white;
     font-weight: bold;
   }
-  .name-col, .submission-col, .date-col {
+  .name-col, .submission-col, .date-col, .text-col {
     color: white;
     a {
       color: white;
