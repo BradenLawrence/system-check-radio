@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react"
-import { Link } from "react-router-dom"
+import UserListTile from "./UserListTile"
 
 const UsersIndexContainer = (props) => {
   const [users, setUsers] = useState([])
@@ -18,7 +18,11 @@ const UsersIndexContainer = (props) => {
       if(json.errors) {
         setErrors([...json.errors])
       } else if(json) {
-        setUsers(json)
+        setUsers(
+          json.sort((a, b) => {
+            return (a.id > b.id) ? 1 : -1
+          })
+        )
       } else {
         setUsers([])
       }
@@ -26,18 +30,54 @@ const UsersIndexContainer = (props) => {
     .catch(error => console.error("Error fetching users: " + error.message))
   }, [])
 
+  const setMembershipStatus = (userId, status) => {
+    fetch(`/api/v1/users/${userId}`, {
+      credentials: "same-origin",
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      },
+      body: JSON.stringify({
+        id: userId,
+        member: status
+      })
+    })
+    .then(response => {
+      if(response.ok) {
+        return response.json()
+      } else {
+        throw new Error(response.status + ": " + response.statusText)
+      }
+    })
+    .then(updated_user => {
+      if(updated_user.errors) {
+        setErrors(updated_user.errors)
+      } else {
+        let userToUpdate = users.find(item => item.id === updated_user.id)
+        let indexOfUser = users.indexOf(userToUpdate)
+        setUsers([
+          ...users.slice(0, indexOfUser),
+          updated_user,
+          ...users.slice(indexOfUser+1)
+        ])
+        setErrors([])
+      }
+    })
+    .catch(error => console.error("Error updating user: " + error.message))
+  }
+
   const userList = users.map(user => {
+    const handleMembershipClick = () => {
+      return setMembershipStatus(user.id, !user.member)
+    }
+
     return(
       <li key={user.id} className="category-listing row align-middle">
-        <div className="name-col small-5 medium-7 columns">
-          <Link to={`/users/${user.id}`}>{ user.name }</Link>
-        </div>
-        <div className="submission-col small-4 medium-3 columns">
-          <Link to={`/users/${user.id}`}>{ user.submissions.length }</Link>
-        </div>
-        <div className="member-col small-3 medium-2 columns">
-          <input type="checkbox"/>
-        </div>
+        <UserListTile
+          user={user}
+          handleMembershipClick={handleMembershipClick}
+        />
       </li>
     )
   })
@@ -49,7 +89,9 @@ const UsersIndexContainer = (props) => {
         <li className="category-listing row align-bottom">
           <div className="header-col small-5 medium-7 columns">Username</div>
           <div className="header-col submission-col small-4 medium-3 columns">Submissions</div>
-          <div className="header-col member-col small-3 medium-2 columns">Member</div>
+          <div className="header-col member-col small-3 medium-2 columns">
+            Member
+          </div>
         </li>
         { userList }
       </ul>
