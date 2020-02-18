@@ -7,7 +7,7 @@ const UsersShowContainer = (props) => {
   }
   const [user, setUser] = useState(defaultUser)
   const [errors, setErrors] = useState([])
-
+  
   useEffect(() => {
     fetch(`/api/v1${props.location.pathname}`)
     .then(response => {
@@ -30,7 +30,6 @@ const UsersShowContainer = (props) => {
   }, [])
 
   let submissionList
-
   if(user.submissions.length > 0) {
     submissionList = user.submissions.map(sub => {
       return(
@@ -60,20 +59,45 @@ const UsersShowContainer = (props) => {
     )
   }
 
+  let membershipDisplay
+  if(user.member) {
+    membershipDisplay = "active"
+  } else {
+    membershipDisplay = "inactive"
+  }
+
   return(
-    <div className="center-column">
-      <h1>{ user.name }</h1>
-      <ul className="errors">
-        { errors }
-      </ul>
-      <h2>Submissions</h2>
-      <ul>
-        <li className="category-listing row align-bottom">
-          <div className="header-col small-8 medium-9 columns">Song</div>
-          <div className="header-col date-col small-4 medium-3 columns">Date</div>
-        </li>
-        { submissionList }
-      </ul>
+    <div>
+      <div className="center-column">
+        <h1>{ user.name }</h1>
+        <ul className="errors">
+          { errors }
+        </ul>
+        <h2>Profile</h2>
+        <ul>
+          <li className="category-listing row">
+            <div className="header-col small-4 columns">Email:</div>
+            <div className="text-col small-8 columns">{ user.email }</div>
+          </li>
+          <li className="category-listing row">
+            <div className="header-col small-4 columns">Member status:</div>
+            <div className="text-col small-8 columns">{ membershipDisplay }</div>
+          </li>
+          <li className="category-listing row">
+            <div className="header-col small-4 columns">Role:</div>
+            <div className="text-col small-8 columns">{ user.role }</div>
+          </li>
+
+        </ul>
+        <h2>Submissions</h2>
+        <ul>
+          <li className="category-listing row align-bottom">
+            <div className="header-col small-8 medium-9 columns">Song</div>
+            <div className="header-col date-col small-4 medium-3 columns">Date</div>
+          </li>
+          { submissionList }
+        </ul>
+      </div>
     </div>
   )
 }
