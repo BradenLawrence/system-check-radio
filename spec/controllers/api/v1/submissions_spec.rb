@@ -25,6 +25,8 @@ RSpec.describe Api::V1::SubmissionsController, type: :controller do
   describe "POST#create" do
     context "Post was successful" do
       it "should persist in the database" do
+        user1.member = true
+        user1.save
         sign_in user1
         previous_count = Submission.all.count
         post :create, params: {submissionData: submission1}, format: :json
@@ -36,6 +38,8 @@ RSpec.describe Api::V1::SubmissionsController, type: :controller do
       end
 
       it "should return the submission that was posted" do
+        user1.member = true
+        user1.save
         sign_in user1
         post :create, params: {submissionData: submission1}, format: :json
 
@@ -44,6 +48,8 @@ RSpec.describe Api::V1::SubmissionsController, type: :controller do
       end
 
       it "should be present on the playlist it was posted to" do
+        user1.member = true
+        user1.save
         sign_in user1
         post :create, params: {submissionData: submission1}, format: :json
 
@@ -64,6 +70,8 @@ RSpec.describe Api::V1::SubmissionsController, type: :controller do
 
     context "Post was unsuccessful"
       it "should not be saved" do
+        user1.member = true
+        user1.save
         sign_in user1
         previous_count = Submission.all.count
         post :create, params: {
@@ -75,6 +83,8 @@ RSpec.describe Api::V1::SubmissionsController, type: :controller do
       end
 
       it "should return errors" do
+        user1.member = true
+        user1.save
         sign_in user1
         post :create, params: {
           submissionData: submission2_missing_params
@@ -94,6 +104,8 @@ RSpec.describe Api::V1::SubmissionsController, type: :controller do
       end
 
       it "should not save duplicate songs to the same playlist" do
+        user1.member = true
+        user1.save
         sign_in user1
         previous_count = Submission.all.count
         post :create, params: {submissionData: submission1}, format: :json
@@ -118,11 +130,26 @@ RSpec.describe Api::V1::SubmissionsController, type: :controller do
 
         expect(returned_json.include?("You must be signed in to make a submission")).to be(true)
       end
+
+      it "should not save if user is not a member" do
+        sign_in user1
+        previous_count = Submission.all.count
+        post :create, params: {submissionData: submission1}, format: :json
+        next_count = Submission.all.count
+
+        expect(next_count).to eq(previous_count)
+
+        returned_json = JSON.parse(response.body)["errors"]
+
+        expect(returned_json.include?("You must be an active member to make a submission")).to be(true)
+      end
   end
 
   describe "PATCH#update" do
     context "Update was successful" do
       it "should save changes in the database" do
+        user1.member = true
+        user1.save
         sign_in user1
         post :create, params: {submissionData: submission1}, format: :json
         old_description = Submission.last.description
@@ -144,6 +171,8 @@ RSpec.describe Api::V1::SubmissionsController, type: :controller do
 
     context "Update was unsuccessful" do
       it "should not save if the user is not the author of the submission" do
+        user1.member = true
+        user1.save
         sign_in user1
         post :create, params: {submissionData: submission1}, format: :json
         old_description = Submission.last.description
@@ -173,6 +202,8 @@ RSpec.describe Api::V1::SubmissionsController, type: :controller do
   describe "DELETE#destroy" do
     context "Delete was successful" do
       it "should remove the submission from the database" do
+        user1.member = true
+        user1.save
         sign_in user1
         post :create, params: {submissionData: submission1}, format: :json
 
@@ -188,6 +219,8 @@ RSpec.describe Api::V1::SubmissionsController, type: :controller do
 
     context "Delete was unsuccessful" do
       it "should not remove the submission if user is not the author" do
+        user1.member = true
+        user1.save
         sign_in user1
         post :create, params: {submissionData: submission1}, format: :json
 
