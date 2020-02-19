@@ -85,20 +85,32 @@ const PlaylistIndexContainer = (props) => {
     )
   })
 
+  const updateSubmission = (updated_submission) => {
+    let subToUpdate = submissions.find(sub => sub.id === updated_submission.id)
+    let indexToUpdate = submissions.indexOf(subToUpdate)
+    setSubmissions([
+      ...submissions.slice(0, indexToUpdate),
+      updated_submission,
+      ...submissions.slice(indexToUpdate+1)
+    ])
+  }
+
+  const removeSubmission = (removed_submission) => {
+    let subToRemove = submissions.find(sub => sub.id === removed_submission.id)
+    let indexToRemove = submissions.indexOf(subToRemove)
+    setSubmissions([
+      ...submissions.slice(0, indexToRemove),
+      ...submissions.slice(indexToRemove+1)
+    ])
+  }
+
   const submissionList = submissions.map(sub => {
-    const removeSubmission = () => {
-      let subToRemove = submissions.find(item => item.id === sub.id)
-      let indexToRemove = submissions.indexOf(subToRemove)
-      setSubmissions([
-        ...submissions.slice(0, indexToRemove),
-        ...submissions.slice(indexToRemove+1)
-      ])
-    }
 
     return(
       <li key={sub.id}>
         <SubmissionTile
           submission={sub}
+          updateSubmission={updateSubmission}
           removeSubmission={removeSubmission}
         />
       </li>
