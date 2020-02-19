@@ -77,7 +77,7 @@ const SubmissionTile = (props) => {
   }
 
   const handleVoteChange = (value, id) => {
-    if(props.submission.currentUserVote) {
+    if(props.submission.currentUserVote.id) {
       fetch(`/api/v1/votes/${id}`, {
         method: "PATCH",
         headers: {
