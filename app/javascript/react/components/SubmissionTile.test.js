@@ -13,7 +13,11 @@ describe("SubmissionTile", () => {
     artists: "TOTO",
     album: "Toto IV",
     preview_url: "https://p.scdn.co/mp3-preview/dd78dafe31bb98f230372c038a126b8808f9349b?cid=c205b06529104ab6a0d1148d267b56cf",
-    description: "go"
+    description: "go",
+    currentUserVote: {
+      id: null,
+      value: false
+    }
   }
 
   beforeEach(() => {
