@@ -76,8 +76,38 @@ const SubmissionTile = (props) => {
     .catch(error => console.error("Error deleting submission: " + error.message))
   }
 
-  const handleVoteChange = (value) => {
-    if(!props.submission.currentUserVote) {
+  const handleVoteChange = (value, id) => {
+    if(props.submission.currentUserVote) {
+      fetch(`/api/v1/votes/${id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
+        body: JSON.stringify({
+          voteData: {
+            id: id,
+            value: value,
+            submission_id: props.submission.id
+          }
+        })
+      })
+      .then(response => {
+        if(response.ok) {
+          return response.json()
+        } else {
+          throw new Error(response.status + ": " + response.statusText)
+        }
+      })
+      .then(updatedSubmission => {
+        if(updatedSubmission.errors) {
+          setErrors(updatedSubmission.errors)
+        } else {
+          props.updateSubmission(updatedSubmission)
+        }
+      })
+      .catch(error => console.error("Error modifying vote: " + error.message))
+    } else {
       fetch(`/api/v1/votes`, {
         method: "POST",
         headers: {
