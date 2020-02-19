@@ -31,7 +31,10 @@ class SubmissionSerializer < ActiveModel::Serializer
     unless vote.nil?
       return vote
     else
-      return false
+      return {
+        id: nil,
+        value: false
+      }
     end
   end
 
