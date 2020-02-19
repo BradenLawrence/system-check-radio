@@ -1,4 +1,5 @@
 import React, { useState } from "react"
+import VoteTile from "./VoteTile"
 
 const SubmissionTile = (props) => {
   const [descriptionInput, setDescriptionInput] = useState(props.submission.description)
@@ -73,6 +74,39 @@ const SubmissionTile = (props) => {
       }
     })
     .catch(error => console.error("Error deleting submission: " + error.message))
+  }
+
+  const handleVoteChange = (value) => {
+    if(!props.submission.currentUserVote) {
+      fetch(`/api/v1/votes`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
+        body: JSON.stringify({
+          voteData: {
+            value: value,
+            submission_id: props.submission.id
+          }
+        })
+      })
+      .then(response => {
+        if(response.ok) {
+          return response.json()
+        } else {
+          throw new Error(response.status + ": " + response.statusText)
+        }
+      })
+      .then(updatedSubmission => {
+        if(updatedSubmission.errors) {
+          setErrors(updatedSubmission.errors)
+        } else {
+          props.updateSubmission(updatedSubmission)
+        }
+      })
+      .catch(error => console.error("Error creating vote: " + error.message))
+    }
   }
 
   const editButtonState = editEnabled ? "edit-active" : "edit-inactive"
@@ -169,6 +203,10 @@ const SubmissionTile = (props) => {
           </li>
         </ul>
         <div className="submission-vote small-3 medium-2">
+          <VoteTile
+            submission={props.submission}
+            handleVoteChange={handleVoteChange}
+          />
         </div>
         <div className="submission-user-content small-9 medium-10 columns row align-justify align-middle">
           <div className="submission-edit small-2 large-1 columns">
