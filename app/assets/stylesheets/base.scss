@@ -200,9 +200,6 @@ ul.login-section {
     padding: 5vh 0
   }
 }
-.category-listing:hover {
-  background-color: $blue4;
-}
 
 .track {
   padding: 0 0 2vh;
@@ -289,4 +286,49 @@ ul.login-section {
 
 .errors, .flash-alert {
   background-color: $red2;
+}
+
+.vote-total {
+  font-size: 1.2em;
+  font-weight: bold;
+  color: white;
+}
+
+.upvote, .downvote {
+  color: $grey3;
+  font-size: 1.2em;
+}
+
+.upvote:focus, .downvote:focus {
+  outline: 0;
+}
+
+.upvote:mousedown, .downvote:mousedown {
+  color: white;
+}
+
+.upvote:hover {
+  color: $yellow3;
+  cursor: pointer;
+}
+
+.downvote:hover {
+  color: $red3;
+  cursor: pointer;
+}
+
+.upvote.active {
+  color: $yellow3;
+}
+
+.upvote.active:hover {
+  color: $yellow1;
+}
+
+.downvote.active {
+  color: $red3;
+}
+
+.downvote.active:hover {
+  color: $red1;
 }

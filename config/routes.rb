@@ -10,6 +10,7 @@ Rails.application.routes.draw do
       resources :playlists, only: [:index]
       resources :submissions, only: [:create, :update, :destroy]
       resources :users, only: [:index, :show, :update]
+      resources :votes, only: [:create]
       post "/songs", to: "songs#search"
     end
   end
