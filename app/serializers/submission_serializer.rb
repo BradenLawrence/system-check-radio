@@ -29,7 +29,7 @@ class SubmissionSerializer < ActiveModel::Serializer
   def currentUserVote
     vote = object.votes.find_by(user: current_user)
     unless vote.nil?
-      return vote.value
+      return vote
     else
       return false
     end
