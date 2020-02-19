@@ -3,7 +3,7 @@ class Api::V1::VotesController < ApplicationController
 
   def create
     if current_user.member
-      voteData = create_params
+      voteData = vote_params
       vote = Vote.new(
         value: voteData["value"],
         user: current_user,
@@ -19,9 +19,31 @@ class Api::V1::VotesController < ApplicationController
     end
   end
 
+  def update
+    voteData = vote_params
+    vote = Vote.find_by(
+      user: current_user, submission_id: voteData["submission_id"]
+    )
+    unless vote.nil?
+      if vote.value == voteData["value"].to_i
+        vote.value = 0
+      else
+        vote.value = voteData["value"].to_i
+      end
+
+      if vote.save
+        render json: vote.submission
+      else
+        render json: { errors: vote.errors }
+      end
+    else
+      render json: { errors: ["Error modifying vote"] }
+    end
+  end
+
   private
 
-  def create_params
+  def vote_params
     params.require(:voteData).permit(:value, :submission_id)
   end
 end

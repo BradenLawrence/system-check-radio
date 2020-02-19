@@ -1,13 +1,14 @@
 import React from "react"
 
 const VoteTile = (props) => {
-  const voteValue = props.submission.currentUserVote
+  const voteId = props.submission.currentUserVote.id
+  const voteValue = props.submission.currentUserVote.value
   const upvoteState = voteValue === 1 ? "active" : "inactive"
   const downvoteState = voteValue === -1 ? "active" : "inactive"
 
   const handleClick = (event) => {
     event.preventDefault()
-    props.handleVoteChange(event.currentTarget.value)
+    props.handleVoteChange(event.currentTarget.value, voteId)
   }
 
   let upvoteDisplay
