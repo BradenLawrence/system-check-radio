@@ -1,8 +1,7 @@
 import React, { useState } from "react"
 
 const SubmissionTile = (props) => {
-  const [submission, setSubmission] = useState(props.submission)
-  const [descriptionInput, setDescriptionInput] = useState(submission.description)
+  const [descriptionInput, setDescriptionInput] = useState(props.submission.description)
   const [editEnabled, setEditEnabled] = useState(false)
   const [errors, setErrors] = useState([])
 
@@ -12,7 +11,7 @@ const SubmissionTile = (props) => {
 
   const handleEditSave = (event) => {
     event.preventDefault()
-    fetch(`/api/v1/submissions/${submission.id}`, {
+    fetch(`/api/v1/submissions/${props.submission.id}`, {
       credentials: "same-origin",
       method: "PATCH",
       headers: {
@@ -32,12 +31,12 @@ const SubmissionTile = (props) => {
         throw new Error(response.status + ": " + response.statusText)
       }
     })
-    .then(updated_submission => {
-      if(updated_submission.errors) {
-        setErrors(updated_submission.errors)
+    .then(updatedSubmission => {
+      if(updatedSubmission.errors) {
+        setErrors(updatedSubmission.errors)
       } else {
-        setSubmission(updated_submission)
         setEditEnabled(false)
+        props.updateSubmission(updatedSubmission)
       }
     })
     .catch(error => console.error("Error searching tracks: " + error.message))
@@ -51,7 +50,7 @@ const SubmissionTile = (props) => {
 
   const handleDelete = (event) => {
     event.preventDefault()
-    fetch(`/api/v1/submissions/${submission.id}`, {
+    fetch(`/api/v1/submissions/${props.submission.id}`, {
       credentials: "same-origin",
       method: "DELETE",
       headers: {
@@ -68,9 +67,9 @@ const SubmissionTile = (props) => {
     })
     .then(deleted_submission => {
       if(deleted_submission.errors) {
-        setErrors(updated_submission.errors)
+        setErrors(deleted_submission.errors)
       } else {
-        props.removeSubmission()
+        props.removeSubmission(deleted_submission)
       }
     })
     .catch(error => console.error("Error deleting submission: " + error.message))
@@ -79,7 +78,7 @@ const SubmissionTile = (props) => {
   const editButtonState = editEnabled ? "edit-active" : "edit-inactive"
 
   let editButton
-  if(submission.isCurrentUser || submission.isAdmin) {
+  if(props.submission.isCurrentUser || props.submission.isAdmin) {
     editButton = (
       <button
         className={`edit-btn ${editButtonState}`}
@@ -96,10 +95,10 @@ const SubmissionTile = (props) => {
   }
 
   let author
-  if(submission.isCurrentUser) {
+  if(props.submission.isCurrentUser) {
     author = "You"
   } else {
-    author = submission.author
+    author = props.submission.author
   }
 
   let descriptionArea
@@ -126,7 +125,7 @@ const SubmissionTile = (props) => {
   } else {
     descriptionArea = (
       <div className="submission-description">
-        "{submission.description}"
+        "{props.submission.description}"
       </div>
     )
   }
@@ -159,19 +158,17 @@ const SubmissionTile = (props) => {
       </div>
       <div className="row">
         <div className="submission-play small-3 medium-2 columns">
-          <a href={submission.preview_url}>
+          <a href={props.submission.preview_url}>
             <i className="fa fa-play-circle"></i>
           </a>
         </div>
         <ul className="submission-info small-9 medium-10 columns">
-          <li className="submission-name">{submission.name}</li>
+          <li className="submission-name">{props.submission.name}</li>
           <li className="submission-details">
-            {submission.album} | {submission.artists}
+            {props.submission.album} | {props.submission.artists}
           </li>
         </ul>
         <div className="submission-vote small-3 medium-2">
-          <i className="fa fa-thumbs-up"></i>
-          <i className="fa fa-thumbs-down"></i>
         </div>
         <div className="submission-user-content small-9 medium-10 columns row align-justify align-middle">
           <div className="submission-edit small-2 large-1 columns">
@@ -179,7 +176,7 @@ const SubmissionTile = (props) => {
           </div>
           <div className="small-10 large-11 columns">
             { descriptionArea }
-            <div className="author-name">-{ author } said on { submission.updated_at }</div>
+            <div className="author-name">-{ author } said on { props.submission.updated_at }</div>
           </div>
         </div>
       </div>
