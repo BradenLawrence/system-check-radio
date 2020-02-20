@@ -190,7 +190,7 @@ const SubmissionTile = (props) => {
     descriptionArea = (
       <div className="submission-description">
         <i className="fa fa-quote-left fa-pull-left"></i>
-        {props.submission.description} 
+        <span className="description-text">{props.submission.description}</span>
         <i className="fa fa-quote-right"></i>
         <span className="author-name">-{ author } said on { props.submission.updated_at }</span>
       </div>
