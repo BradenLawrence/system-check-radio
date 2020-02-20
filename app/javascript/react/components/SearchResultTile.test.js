@@ -20,7 +20,6 @@ describe("SearchResultTile", () => {
   })
 
   it("should render an h3 element containing the title of the track", () => {
-    console.log(wrapper.find("h3").text())
     expect(wrapper.find("h3").text()).toBe("Africa")
   })
 

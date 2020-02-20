@@ -3,6 +3,7 @@ $blue2:   #3B90AC;
 $blue3:   #1E7E9E;
 $blue4:   #086888;
 $blue5:   #04516B;
+$blue6:   #054454;
 
 $yellow1: #FFBE79;
 $yellow2: #FFAA50;
@@ -16,6 +17,10 @@ $red3:    #FD4928;
 $red4:    #D92605;
 $red5:    #AB1A00;
 
+$pink1:   #ED1A7B;
+$pink2:   desaturate($pink1, 20%);
+
+$grey0:   #EEEEEE;
 $grey1:   desaturate($blue1, 100%);
 $grey2:   desaturate($blue2, 100%);
 $grey3:   desaturate($blue3, 100%);
