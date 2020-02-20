@@ -169,7 +169,7 @@ const SubmissionTile = (props) => {
   if(editEnabled) {
     descriptionArea = (
       <div className="submission-form-area">
-        <form className="submission-edit-form row align-justify" onSubmit={ handleEditSave }>
+        <form className="submission-edit-form row" onSubmit={ handleEditSave }>
           <input
             name="description"
             type="text"
@@ -189,63 +189,58 @@ const SubmissionTile = (props) => {
   } else {
     descriptionArea = (
       <div className="submission-description">
-        "{props.submission.description}"
+        <i className="fa fa-quote-left fa-pull-left"></i>
+        {props.submission.description} 
+        <i className="fa fa-quote-right"></i>
+        <span className="author-name">-{ author } said on { props.submission.updated_at }</span>
       </div>
     )
   }
 
-  let deleteButton
-
+  let submissionBtnArea
   if(editEnabled) {
-    deleteButton = (
-      <button
-        type="submit"
-        className="delete-btn"
-        onClick={handleDelete}
-      >
+    submissionBtnArea = (
+      <button type="submit" onClick={handleDelete} className="submission-delete small-1 columns">
         <i className="fa fa-times"></i>
       </button>
+    )
+  } else {
+    submissionBtnArea = (
+    <a href={props.submission.preview_url} className="submission-play small-1 columns">
+      <i className="fa fa-caret-right fa-large"></i>
+    </a>
     )
   }
 
   return(
     <div className="category-listing track">
-      <div className="row align-right">
-        <div className="submision-top-bar small-10 columns">
-          <ul className="errors">
-            { errors }
-          </ul>
-        </div>
-        <div className="delete-area small-2 columns">
-          { deleteButton }
-        </div>
-      </div>
-      <div className="row">
-        <div className="submission-play small-3 medium-2 columns">
-          <a href={props.submission.preview_url}>
-            <i className="fa fa-play-circle"></i>
-          </a>
-        </div>
-        <ul className="submission-info small-9 medium-10 columns">
-          <li className="submission-name">{props.submission.name}</li>
-          <li className="submission-details">
-            {props.submission.album} | {props.submission.artists}
-          </li>
-        </ul>
-        <div className="submission-vote small-3 medium-2">
+      <ul className="errors">
+        { errors }
+      </ul>
+      <div className="row align-middle">
+        <div className="submission-vote small-2 columns">
           <VoteTile
             submission={props.submission}
             handleVoteChange={handleVoteChange}
           />
         </div>
-        <div className="submission-user-content small-9 medium-10 columns row align-justify align-middle">
-          <div className="submission-edit small-2 large-1 columns">
-            { editButton }
-          </div>
-          <div className="small-10 large-11 columns">
-            { descriptionArea }
-            <div className="author-name">-{ author } said on { props.submission.updated_at }</div>
-          </div>
+        <div className="album-cover small-2 columns">
+          <img src={props.submission.image} />
+        </div>
+        <ul className="submission-info small-7 columns">
+          <li className="submission-name">{props.submission.name}</li>
+          <li className="submission-details">
+            {props.submission.album} | {props.submission.artists}
+          </li>
+        </ul>
+        { submissionBtnArea }
+      </div>
+      <div className="submission-user-content row align-top">
+        <div className="submission-edit small-2 columns">
+          { editButton }
+        </div>
+        <div className="description-area small-10 columns">
+          { descriptionArea }
         </div>
       </div>
     </div>

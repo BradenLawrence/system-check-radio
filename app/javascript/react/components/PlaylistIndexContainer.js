@@ -76,7 +76,7 @@ const PlaylistIndexContainer = (props) => {
 
   const searchResultsList = searchResults.map(result => {
     return(
-      <li key={result.id}>
+      <li key={result.id} className="small-8 columns">
         <SearchResultTile
           result={result}
           handleCreateSubmission={handleCreateSubmission}
@@ -105,7 +105,6 @@ const PlaylistIndexContainer = (props) => {
   }
 
   const submissionList = submissions.map(sub => {
-
     return(
       <li key={sub.id}>
         <SubmissionTile
@@ -126,7 +125,7 @@ const PlaylistIndexContainer = (props) => {
       <SearchBar
         handleSearchResults={handleSearchResults}
       />
-      <ul>
+      <ul className="row align-center">
         { searchResultsList }
       </ul>
       <ul>

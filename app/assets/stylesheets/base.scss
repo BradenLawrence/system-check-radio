@@ -1,7 +1,7 @@
 @import "colors";
 
 .full-page {
-  background-color: $yellow1;
+  background-color: $grey0;
 }
 
 .top-bar {
@@ -10,6 +10,10 @@
     font-size: 1em;
     font-weight: bold;
     margin: 0 0 0 0;
+    text-align: center;
+  }
+  .top-bar-links {
+    text-align: center;
   }
   a {
     color: $grey1;
@@ -17,8 +21,6 @@
   ul {
     background-color: transparent;
   }
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
 }
 
 .top-bar-nav {
@@ -29,11 +31,29 @@
   }
 }
 
+nav {
+  margin-bottom: 2vh;
+}
+
+form.new_user > div > label {
+  color: white;
+}
+form.new_user > div.actions {
+  margin-bottom: 5vh;
+}
+
+form > input[type="submit"] {
+  background-color: $pink2;
+}
+form > input[type="submit"]:hover {
+  background-color: $pink1;
+}
+
 ul.login-section {
   background-color: transparent;
   list-style: none;
   margin: 0 0 0 0;
-  text-align: right;
+  text-align: center;
   li {
     display: inline;
     margin: 0 2vw 0 0;
@@ -44,6 +64,7 @@ ul.login-section {
   margin-top: 2vh;
   padding: 1vh 1vw;
   background-color: $blue5;
+  border-radius: .25rem;
   h1 {
     text-align: center;
     color: white;
@@ -65,24 +86,39 @@ ul.login-section {
 
 .category-listing {
   margin: 0 3vw;
-  border-bottom: 1px solid $blue4;
-  .submission-play {
-    align-self: flex-end;
+  border-bottom: 2px solid $blue5;
+  background-color: $blue6;
+  .submission-play, .submission-delete {
     text-align: center;
-    a > i {
-      font-size: 2em;
+    background-color: $pink2;
+    i {
       color: white;
     }
-    .play-button {
-      background-color: $blue1;
-      padding: 1vh 1vw;
-      border-radius: .35rem;
+  }
+  .submission-play:hover {
+    background-color: $pink1;
+  }
+  .submission-delete {
+    background-color: $red2;
+    height: 3.5vh;
+  }
+  .submission-delete:hover {
+    background-color: $red3;
+    cursor: pointer;
+  }
+  .album-cover {
+    height: 6vh;
+    text-align: center;
+    img {
+      height: 6vh;
+      min-width: 6vh;
     }
   }
   .submission-info {
     color: white;
     .submission-name {
       font-weight: 500;
+      color: $yellow2;
     }
     .submission-details {
       font-size: .75em;
@@ -99,38 +135,50 @@ ul.login-section {
     font-style: italic;
     color: white;
   }
+  .fa-quote-left {
+    font-size: .8em;
+    margin-top: 1vh;
+    opacity: .5;
+  }
+  .fa-quote-right {
+    font-size: .8em;
+    margin-left: .5vw;
+    opacity: .5;
+  }
   .author-name {
     font-size: .75em;
     padding: 0 .5rem 7px .75rem;
   }
   .submission-user-content {
     padding-right: 0;
+    padding-top: 1vh;
+    background-color: $blue5;
     .submission-description {
       border-radius: 2.4375rem;
-      padding: 7px .5rem;
+      padding: 7px 0;
     }
     .submission-form-area {
       padding-left: 0;
     }
     .submission-edit {
-      text-align: right;
+      text-align: center;
     }
     .submission-edit-form {
-      margin-left: 0;
-      padding-left: 0;
       input, button {
         border: 0px;
       }
       input[type=text] {
         font-style: italic;
-        border-radius: 2.4375rem;
+        border-top-left-radius: .2rem;
+        border-bottom-left-radius: .2rem;
         padding-left: 1rem;
         margin-bottom: 0;
       }
     }
     button.edit-btn {
       outline: none;
-      margin: 8px 1vw 8px 0;
+      margin: 8px 0;
+      cursor: pointer;
     }
     .edit-btn {
       height: 1.5rem;
@@ -141,6 +189,9 @@ ul.login-section {
       background-color: $blue1;
       border-radius: 2.4375rem;
     }
+    .edit-active:hover {
+      background-color: $blue2;
+    }
     .edit-inactive {
       color: white;
     }
@@ -150,27 +201,29 @@ ul.login-section {
       border-radius: 2.4375rem;
     }
     .check-btn {
-      color: $yellow3;
+      color: white;
+      background-color: $yellow2;
       font-size: 1.2em;
       text-align: center;
+      border-top-right-radius: .2rem;
+      border-bottom-right-radius: .2rem;
     }
     .check-btn:hover {
       cursor: pointer;
       color: white;
       background-color: $yellow3;
-      border-radius: 1rem;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
     }
   }
   .delete-area {
-    height: 5.5vh;
+    text-align: center;
     .delete-btn {
-      margin: 1vh 0;
       color: white;
       background-color: $red2;
       font-size: .8em;
       padding: .4vh 2vw;
-      border-radius: .35rem;
-      line-height: 1.6;
+      border-radius: .2rem;
+      line-height: 1;
       box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
     }
     .delete-btn:hover {
@@ -201,10 +254,6 @@ ul.login-section {
   }
 }
 
-.track {
-  padding: 0 0 2vh;
-}
-
 .search > div {
   label {
     text-align: center;
@@ -213,10 +262,19 @@ ul.login-section {
     padding: 0;
     align-self: center;
     color: white;
+    height: 2.4375rem;
+    line-height: 2.4375rem;
+    background-color: $blue6;
   }
   input {
     padding: 2vh 2vw;
     margin-bottom: 0;
+  }
+  input[type="submit"] {
+    background-color: $pink2;
+  }
+  input[type="submit"]:hover {
+    background-color: $pink1;
   }
 }
 
@@ -229,6 +287,7 @@ ul.login-section {
   min-height: 13vh;
   .album-cover {
     align-self: center;
+    text-align: center;
     img {
       border-radius: 2rem;
     }
