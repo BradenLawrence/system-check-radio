@@ -82,6 +82,10 @@ ul.login-section {
   form {
     margin: 0 3vw;
   }
+  iframe {
+    margin: 0 3vw;
+    width: calc(100% - 6vw);
+  }
 }
 
 .submission-list {
@@ -97,10 +101,6 @@ ul.login-section {
     i {
       color: white;
     }
-  }
-  .player-wrapper {
-    width: 80px;
-    overflow: auto;
   }
   .submission-delete-wrapper {
     text-align: center;
@@ -147,6 +147,18 @@ ul.login-section {
       margin: 0 .5vw;
     }
   }
+  .play-wrapper {
+    text-align: center;
+    height: 80px;
+  }
+  .play-btn {
+    color: white;
+    font-size: 3em;
+  }
+  .play-btn:hover {
+    cursor: pointer;
+    color: $pink2;
+  }
   .submission-description, .author-name {
     font-style: italic;
     color: white;
@@ -154,6 +166,7 @@ ul.login-section {
   .fa-quote-left {
     font-size: .8em;
     margin-top: 1vh;
+    margin-right: .5vw;
     opacity: .5;
   }
   .fa-quote-right {
@@ -166,10 +179,12 @@ ul.login-section {
     padding: 0 .5rem 7px .75rem;
   }
   .submission-user-content {
+    padding: 1vh 0;
     padding-right: 0;
     padding-top: 1vh;
-    background-color: $blue5;
+    background-color: #333333;
     .submission-description {
+      text-align: center;
       border-radius: 2.4375rem;
       padding: 7px 0;
     }
@@ -304,6 +319,10 @@ ul.login-section {
     background-color: $grey3;
   }
 }
+.search-label {
+  width: 80px;
+}
+
 
 .search-result {
   border: 1px solid $blue5;
@@ -358,11 +377,6 @@ ul.login-section {
   .search > div > input {
     padding: 0 2vw;
     margin-bottom: 0;
-  }
-  .category-listing {
-    .player-wrapper {
-      width: 300px;
-    }
   }
 }
 

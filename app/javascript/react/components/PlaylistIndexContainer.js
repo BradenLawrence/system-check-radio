@@ -8,13 +8,8 @@ const PlaylistIndexContainer = (props) => {
     name: "",
     submissions: []
   }
-  const defaultUser = {
-    name: "",
-    member: false,
-    isAdmin: false,
-  }
   const [playlist, setPlaylist] = useState(defaultPlaylist)
-  const [user, setUser] = useState(defaultUser)
+  const [playerSource, setPlayerSource] = useState("")
   const [submissions, setSubmissions] = useState([])
   const [searchResults, setSearchResults] = useState([])
   const [errors, setErrors] = useState([])
@@ -96,6 +91,23 @@ const PlaylistIndexContainer = (props) => {
     )
   })
 
+  let playerDisplay
+  if(playerSource !== "") {
+    playerDisplay = (
+      <iframe
+        src={playerSource}
+        height="80"
+        frameBorder="0"
+        allowtransparency="true"
+        allow="encrypted-media"
+      ></iframe>
+    )
+  }
+
+  const playSubmission = (trackId) => {
+    setPlayerSource(`https://open.spotify.com/embed/track/${trackId}`)
+  }
+
   const updateSubmission = (updated_submission) => {
     let subToUpdate = submissions.find(sub => sub.id === updated_submission.id)
     let indexToUpdate = submissions.indexOf(subToUpdate)
@@ -120,6 +132,7 @@ const PlaylistIndexContainer = (props) => {
       <li key={sub.id}>
         <SubmissionTile
           submission={sub}
+          playSubmission={playSubmission}
           updateSubmission={updateSubmission}
           removeSubmission={removeSubmission}
         />
@@ -137,6 +150,7 @@ const PlaylistIndexContainer = (props) => {
       <ul className="row align-center">
         { searchResultsList }
       </ul>
+      { playerDisplay }
       <ul className="submission-list">
         { submissionList }
       </ul>

@@ -144,17 +144,15 @@ const SubmissionTile = (props) => {
   let editButton
   if(props.submission.isCurrentUser || props.submission.isAdmin) {
     editButton = (
-      <button
-        className={`edit-btn ${editButtonState}`}
-        type="button"
-        onClick={handleEditToggle}
-      >
-        <i className="fa fa-pencil"></i>
-      </button>
-    )
-  } else {
-    editButton = (
-      <div className="edit-btn"></div>
+      <div className="submission-edit small-2 columns">
+        <button
+          className={`edit-btn ${editButtonState}`}
+          type="button"
+          onClick={handleEditToggle}
+        >
+          <i className="fa fa-pencil"></i>
+        </button>
+      </div>
     )
   }
 
@@ -188,11 +186,11 @@ const SubmissionTile = (props) => {
     )
   } else {
     descriptionArea = (
-      <div className="submission-description">
-        <i className="fa fa-quote-left fa-pull-left"></i>
-        <span className="description-text">{props.submission.description}</span>
-        <i className="fa fa-quote-right"></i>
-        <span className="author-name">-{ author } said on { props.submission.updated_at }</span>
+      <div className="submission-description"><i className="fa fa-quote-left"></i>
+        <span className="description-text">{props.submission.description}</span><i className="fa fa-quote-right"></i>
+        <div className="author-name">
+          -{ author } said on { props.submission.updated_at }
+        </div>
       </div>
     )
   }
@@ -217,37 +215,35 @@ const SubmissionTile = (props) => {
     )
   }
 
+  const handlePlayClick = (event) => {
+    event.preventDefault()
+    props.playSubmission(props.submission.track_id)
+  }
+
   return(
     <div className="category-listing track">
       <ul className="errors">
         { errors }
       </ul>
-      <div className="row align-middle align-spaced">
+      <div className="row align-middle align-center">
         { voteArea }
-        <ul className="submission-player small-5 medium-10 columns">
-          <div className="player-wrapper">
-            <iframe
-              src={props.submission.external_url}
-              width="300"
-              height="80"
-              frameBorder="0"
-              allowtransparency="true"
-              allow="encrypted-media"
-            ></iframe>
-          </div>
-        </ul>
-        <ul className="submission-info small-5 show-for-small-only columns">
-          <li className="submission-name show-for-small-only">{props.submission.name}</li>
-          <li className="submission-details show-for-small-only">
+        <div className="play-wrapper small-2 medium-2 row align-center">
+          <button
+            type="button"
+            onClick={handlePlayClick}
+            ><i className="play-btn fa fa-arrow-circle-up"></i>
+          </button>
+        </div>
+          <ul className="submission-info small-7 medium-7 columns">
+          <li className="submission-name">{props.submission.name}</li>
+          <li className="submission-details">
             {props.submission.album} | {props.submission.artists}
           </li>
         </ul>
       </div>
       <div className="submission-user-content row align-top">
-        <div className="submission-edit small-2 columns">
-          { editButton }
-        </div>
-        <div className="description-area small-10 columns">
+        { editButton }
+        <div className="description-area columns">
           { descriptionArea }
         </div>
       </div>

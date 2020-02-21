@@ -37,8 +37,4 @@ describe("SubmissionTile", () => {
   it("should render a submission-details containing a description of the track", () => {
     expect(wrapper.find("li.submission-details").text()).toBe("Toto IV | TOTO")
   })
-
-  it("should render a link pointing to a preview URL", () => {
-    expect(wrapper.find("iframe").prop("src")).toBe("https://open.spotify.com/embed/track/2374M0fQpWi3dLnB54qaLX")
-  })
 })
