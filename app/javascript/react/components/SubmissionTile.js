@@ -187,7 +187,7 @@ const SubmissionTile = (props) => {
   } else {
     descriptionArea = (
       <div className="submission-description"><i className="fa fa-quote-left"></i>
-        <span className="description-text"> {props.submission.description}</span><i className="fa fa-quote-right"></i>
+        <span className="description-text">{props.submission.description}</span><i className="fa fa-quote-right"></i>
         <div className="author-name">
           -{ author } said on { props.submission.updated_at }
         </div>
