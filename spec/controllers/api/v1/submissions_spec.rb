@@ -132,7 +132,10 @@ RSpec.describe Api::V1::SubmissionsController, type: :controller do
       end
 
       it "should not save if user is not a member" do
+        user1.member = false
+        user1.save
         sign_in user1
+
         previous_count = Submission.all.count
         post :create, params: {submissionData: submission1}, format: :json
         next_count = Submission.all.count
