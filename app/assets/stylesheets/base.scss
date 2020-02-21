@@ -41,7 +41,6 @@ form.new_user > div > label {
 form.new_user > div.actions {
   margin-bottom: 5vh;
 }
-
 form > input[type="submit"] {
   background-color: $pink2;
 }
@@ -87,35 +86,47 @@ ul.login-section {
 .category-listing {
   margin: 0 3vw;
   border-bottom: 2px solid $blue5;
-  background-color: $blue6;
-  .submission-play, .submission-delete {
-    text-align: center;
-    background-color: $pink2;
+  background: rgb(0,0,0);
+  background: linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(52,42,44,1) 100%);
+  .submission-delete {
     i {
       color: white;
     }
   }
-  .submission-play:hover {
-    background-color: $pink1;
+  .player-wrapper {
+    width: 80px;
+    overflow: auto;
+  }
+  .submission-delete-wrapper {
+    text-align: center;
   }
   .submission-delete {
     background-color: $red2;
-    height: 3.5vh;
+    border-radius: .25rem;
+    height: 6vw;
+    max-height: 35px;
+    width: 6vw;
+    max-width: 35px;
   }
   .submission-delete:hover {
     background-color: $red3;
     cursor: pointer;
   }
-  .album-cover {
-    height: 6vh;
-    text-align: center;
-    img {
-      height: 6vh;
-      min-width: 6vh;
+  .submission-player {
+    color: white;
+    padding-left: 0;
+    line-height: .8;
+    .submission-name {
+      font-weight: 500;
+      color: $yellow2;
+    }
+    .submission-details {
+      font-size: .75em;
     }
   }
   .submission-info {
     color: white;
+    padding-left: 0;
     .submission-name {
       font-weight: 500;
       color: $yellow2;
@@ -318,6 +329,11 @@ ul.login-section {
   }
 }
 
+.user-item {
+  background: none;
+  background-color: $blue6;
+}
+
 @media only screen and (min-width: 640px) {
   .center-column {
     width: 75vw;
@@ -326,6 +342,11 @@ ul.login-section {
   .search > div > input {
     padding: 0 2vw;
     margin-bottom: 0;
+  }
+  .category-listing {
+    .player-wrapper {
+      width: 300px;
+    }
   }
 }
 
