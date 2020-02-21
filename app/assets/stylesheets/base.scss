@@ -7,16 +7,16 @@
 .top-bar {
   background-color: $grey5;
   h1 {
-    font-size: 1em;
-    font-weight: bold;
+    font-size: 1.6em;
     margin: 0 0 0 0;
     text-align: center;
+    font-family: 'Odibee Sans', 'Helvetica', 'Arial', sans-serif;
   }
   .top-bar-links {
     text-align: center;
   }
   a {
-    color: $grey1;
+    color: $yellow1;
   }
   ul {
     background-color: transparent;
@@ -67,6 +67,7 @@ ul.login-section {
   h1 {
     text-align: center;
     color: white;
+    font-family: 'Odibee Sans', 'Helvetica', 'Arial', sans-serif;
   }
   h2 {
     font-size: 1.3em;
@@ -75,12 +76,16 @@ ul.login-section {
   }
   ul {
     list-style: none;
-    margin-left: 0;
-    margin-right: 0;
+    margin-left: auto;
+    margin-right: auto;
   }
   form {
     margin: 0 3vw;
   }
+}
+
+.submission-list {
+  max-width: 31rem;
 }
 
 .category-listing {
@@ -280,12 +285,23 @@ ul.login-section {
   input {
     padding: 2vh 2vw;
     margin-bottom: 0;
+    border-right: 0;
+    background-color: white;
   }
   input[type="submit"] {
     background-color: $pink2;
   }
   input[type="submit"]:hover {
     background-color: $pink1;
+  }
+  .clear-search {
+    border: 0;
+    background-color: $grey2;
+    color: white;
+  }
+  .clear-search:hover {
+    cursor: pointer;
+    background-color: $grey3;
   }
 }
 

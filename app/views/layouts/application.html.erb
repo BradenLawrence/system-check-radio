@@ -5,12 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <%= stylesheet_link_tag 'application', media: 'all' %>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Odibee+Sans&display=swap" rel="stylesheet">
   <%= csrf_meta_tags %>
 </head>
 <body class="full-page">
 
   <nav class="top-bar row align-justify medium-unstack">
-    <h1 class="small-12 medium-3 columns"><a href="/">SystemCheckRadio</a></h1>
+    <h1 class="small-12 medium-3 columns"><a href="/">System Check Radio</a></h1>
     <section class="top-bar-links small-12 medium-6 columns">
       <ul class="top-bar-nav">
         <%- if current_user && current_user.role == "admin" -%>

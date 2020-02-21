@@ -17,27 +17,48 @@ const SearchBar = (props) => {
 
   const handleSubmit = (event) => {
     event.preventDefault()
-    let body = new FormData()
-    body.append("query[term]", query.term)
-    fetch(`/api/v1/songs`, {
-      method: "POST",
-      credentials: "same-origin",
-      headers: {
-        "Accept": "application/json"
-      },
-      body: body
-    })
-    .then(response => {
-      if(response.ok) {
-        return response.json()
-      } else {
-        throw new Error(response.status + ": " + response.statusText)
-      }
-    })
-    .then(json => {
-      props.handleSearchResults(json)
-    })
-    .catch(error => console.error("Error searching tracks: " + error.message))
+    if(query.term === "") {
+      props.handleSearchResults([])
+    } else {
+      let body = new FormData()
+      body.append("query[term]", query.term)
+      fetch(`/api/v1/songs`, {
+        method: "POST",
+        credentials: "same-origin",
+        headers: {
+          "Accept": "application/json"
+        },
+        body: body
+      })
+      .then(response => {
+        if(response.ok) {
+          return response.json()
+        } else {
+          throw new Error(response.status + ": " + response.statusText)
+        }
+      })
+      .then(json => {
+        props.handleSearchResults(json)
+      })
+      .catch(error => console.error("Error searching tracks: " + error.message))
+    }
+  }
+
+  const handleClearSearch = (event) => {
+    event.preventDefault()
+    setQuery(defaultQuery)
+  }
+
+  let clearSearchDisplay
+  if(query.term !== "") {
+    clearSearchDisplay = (
+      <input
+        type="button"
+        value="Clear"
+        className="clear-search"
+        onClick={ handleClearSearch }
+      />
+    )
   }
 
   return(
@@ -50,10 +71,11 @@ const SearchBar = (props) => {
           name="term"
           onChange={handleInput}
           value={query.term}
-          placeholder="Type a song here"
+          placeholder="Type a song name..."
           type="text"
           className="medium-8 columns"
-          />
+        />
+        { clearSearchDisplay }
         <input type="submit" value="Search" className="medium-2 columns button primary"/>
       </div>
     </form>
