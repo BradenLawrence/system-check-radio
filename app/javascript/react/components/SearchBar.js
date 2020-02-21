@@ -64,7 +64,7 @@ const SearchBar = (props) => {
   return(
     <form onSubmit={handleSubmit} className="search">
       <div className="row medium-unstack">
-        <label htmlFor="term" className="medium-2 columns hide-for-small-only">
+        <label htmlFor="term" className="search-label hide-for-small-only">
           Track
         </label>
         <input
@@ -73,7 +73,7 @@ const SearchBar = (props) => {
           value={query.term}
           placeholder="Type a song name..."
           type="text"
-          className="medium-8 columns"
+          className="columns"
         />
         { clearSearchDisplay }
         <input type="submit" value="Search" className="medium-2 columns button primary"/>
