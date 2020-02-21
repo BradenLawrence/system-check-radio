@@ -231,7 +231,7 @@ const SubmissionTile = (props) => {
           <button
             type="button"
             onClick={handlePlayClick}
-            ><i class="play-btn fa fa-arrow-circle-up"></i>
+            ><i className="play-btn fa fa-arrow-circle-up"></i>
           </button>
         </div>
           <ul className="submission-info small-7 medium-7 columns">
