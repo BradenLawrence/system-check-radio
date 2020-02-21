@@ -47,18 +47,23 @@ const SearchBar = (props) => {
   const handleClearSearch = (event) => {
     event.preventDefault()
     setQuery(defaultQuery)
+    props.handleSearchResults([])
   }
 
   let clearSearchDisplay
+  let inputClearClass
   if(query.term !== "") {
     clearSearchDisplay = (
       <input
         type="button"
         value="Clear"
-        className="clear-search"
+        className="clear-search small-3 columns"
         onClick={ handleClearSearch }
       />
     )
+    inputClearClass = "small-9"
+  } else {
+    inputClearClass = ""
   }
 
   return(
@@ -67,16 +72,18 @@ const SearchBar = (props) => {
         <label htmlFor="term" className="search-label hide-for-small-only">
           Track
         </label>
-        <input
-          name="term"
-          onChange={handleInput}
-          value={query.term}
-          placeholder="Type a song name..."
-          type="text"
-          className="columns"
-        />
-        { clearSearchDisplay }
-        <input type="submit" value="Search" className="medium-2 columns button primary"/>
+        <div className="columns row">
+          <input
+            name="term"
+            onChange={handleInput}
+            value={query.term}
+            placeholder="Type a song name..."
+            type="text"
+            className={`columns ${inputClearClass}`}
+          />
+          { clearSearchDisplay }
+        </div>
+        <input type="submit" value="Search" className="search-btn medium-2 columns button primary"/>
       </div>
     </form>
   )
