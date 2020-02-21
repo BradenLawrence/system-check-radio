@@ -14,6 +14,8 @@ describe("SubmissionTile", () => {
     album: "Toto IV",
     preview_url: "https://p.scdn.co/mp3-preview/dd78dafe31bb98f230372c038a126b8808f9349b?cid=c205b06529104ab6a0d1148d267b56cf",
     description: "go",
+    track_id: "2374M0fQpWi3dLnB54qaLX",
+    external_url: "https://open.spotify.com/embed/track/2374M0fQpWi3dLnB54qaLX",
     currentUserVote: {
       id: null,
       value: false
@@ -37,6 +39,6 @@ describe("SubmissionTile", () => {
   })
 
   it("should render a link pointing to a preview URL", () => {
-    expect(wrapper.find("a").prop("href")).toBe("https://p.scdn.co/mp3-preview/dd78dafe31bb98f230372c038a126b8808f9349b?cid=c205b06529104ab6a0d1148d267b56cf")
+    expect(wrapper.find("iframe").prop("src")).toBe("https://open.spotify.com/embed/track/2374M0fQpWi3dLnB54qaLX")
   })
 })

@@ -11,10 +11,10 @@ const UserListTile = (props) => {
 
   return(
     <>
-      <div className="name-col small-5 medium-7 columns">
+      <div className="name-col small-8 medium-7 columns">
         <Link to={`/users/${props.user.id}`}>{ props.user.name }</Link>
       </div>
-      <div className="submission-col small-4 medium-3 columns">
+      <div className="submission-col medium-3 columns hide-for-small-only">
         <Link to={`/users/${props.user.id}`}>{ props.user.submissions.length }</Link>
       </div>
       <div className="member-col small-3 medium-2 columns">
