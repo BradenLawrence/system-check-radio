@@ -6,6 +6,7 @@ class User < ApplicationRecord
 
   validates :name, presence: true
   validates :role, presence: true
+  validates :member, inclusion: { in: [ true, false ] }
   enum role: { user: 0, admin: 1 }
   after_initialize :set_default_role, if: :new_record?
 
