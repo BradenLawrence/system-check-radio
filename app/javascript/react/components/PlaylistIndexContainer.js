@@ -8,7 +8,13 @@ const PlaylistIndexContainer = (props) => {
     name: "",
     submissions: []
   }
+  const defaultUser = {
+    name: "",
+    member: false,
+    isAdmin: false,
+  }
   const [playlist, setPlaylist] = useState(defaultPlaylist)
+  const [user, setUser] = useState(defaultUser)
   const [submissions, setSubmissions] = useState([])
   const [searchResults, setSearchResults] = useState([])
   const [errors, setErrors] = useState([])
@@ -74,6 +80,11 @@ const PlaylistIndexContainer = (props) => {
     .catch(error => console.error("Error searching tracks: " + error.message))
   }
 
+  let searchBarDisplay
+  if(playlist.isMember) {
+    searchBarDisplay = <SearchBar handleSearchResults={handleSearchResults} />
+  }
+
   const searchResultsList = searchResults.map(result => {
     return(
       <li key={result.id} className="small-12 medium-8 columns">
@@ -122,13 +133,11 @@ const PlaylistIndexContainer = (props) => {
       <ul className="errors">
         { errors }
       </ul>
-      <SearchBar
-        handleSearchResults={handleSearchResults}
-      />
+      { searchBarDisplay }
       <ul className="row align-center">
         { searchResultsList }
       </ul>
-      <ul>
+      <ul className="submission-list">
         { submissionList }
       </ul>
     </div>
