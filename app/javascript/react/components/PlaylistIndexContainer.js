@@ -8,13 +8,7 @@ const PlaylistIndexContainer = (props) => {
     name: "",
     submissions: []
   }
-  const defaultUser = {
-    name: "",
-    member: false,
-    isAdmin: false,
-  }
   const [playlist, setPlaylist] = useState(defaultPlaylist)
-  const [user, setUser] = useState(defaultUser)
   const [playerSource, setPlayerSource] = useState("")
   const [submissions, setSubmissions] = useState([])
   const [searchResults, setSearchResults] = useState([])
