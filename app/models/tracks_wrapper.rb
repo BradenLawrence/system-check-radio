@@ -25,7 +25,7 @@ class TracksWrapper
         duration_ms: track.duration_ms,
         image: track.album.images.min_by{|value| value["height"]}["url"],
         preview_url: track.preview_url,
-        external_url: track.external_urls["spotify"]
+        external_url: "https://open.spotify.com/embed/track/#{track.id}"
       }
     end
   end
