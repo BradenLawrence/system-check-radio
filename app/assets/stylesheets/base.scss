@@ -298,7 +298,6 @@ ul.login-section {
     background-color: $blue6;
   }
   input {
-    padding: 2vh 2vw;
     margin-bottom: 0;
     border-right: 0;
     background-color: white;
@@ -309,10 +308,15 @@ ul.login-section {
   input[type="submit"]:hover {
     background-color: $pink1;
   }
+  .search-btn {
+    border: 0;
+  }
   .clear-search {
     border: 0;
     background-color: $grey2;
     color: white;
+    height: 2.4375rem;
+    border: 1px solid $grey2;
   }
   .clear-search:hover {
     cursor: pointer;
@@ -374,10 +378,10 @@ ul.login-section {
     width: 75vw;
     margin: 0 auto;
   }
-  .search > div > input {
-    padding: 0 2vw;
-    margin-bottom: 0;
-  }
+  // .search > div > input[type="text"] {
+  //   padding: 0 2vw;
+  //   margin-bottom: 0;
+  // }
 }
 
 .errors, .flash {
