@@ -197,18 +197,23 @@ const SubmissionTile = (props) => {
     )
   }
 
-  let submissionBtnArea
+  let voteArea
   if(editEnabled) {
-    submissionBtnArea = (
-      <button type="submit" onClick={handleDelete} className="submission-delete small-1 columns">
-        <i className="fa fa-times"></i>
-      </button>
+    voteArea = (
+      <div className="submission-delete-wrapper small-2 columns row">
+        <button type="submit" onClick={handleDelete} className="submission-delete small-10">
+          <i className="fa fa-times"></i>
+        </button>
+      </div>
     )
   } else {
-    submissionBtnArea = (
-    <a href={props.submission.preview_url} className="submission-play small-1 columns">
-      <i className="fa fa-caret-right fa-large"></i>
-    </a>
+    voteArea = (
+      <div className="submission-vote small-2 columns">
+        <VoteTile
+          submission={props.submission}
+          handleVoteChange={handleVoteChange}
+        />
+      </div>
     )
   }
 
@@ -217,23 +222,26 @@ const SubmissionTile = (props) => {
       <ul className="errors">
         { errors }
       </ul>
-      <div className="row align-middle">
-        <div className="submission-vote small-2 columns">
-          <VoteTile
-            submission={props.submission}
-            handleVoteChange={handleVoteChange}
-          />
-        </div>
-        <div className="album-cover small-2 columns">
-          <img src={props.submission.image} />
-        </div>
-        <ul className="submission-info small-7 columns">
-          <li className="submission-name">{props.submission.name}</li>
-          <li className="submission-details">
+      <div className="row align-middle align-spaced">
+        { voteArea }
+        <ul className="submission-player small-5 medium-10 columns">
+          <div className="player-wrapper">
+            <iframe
+              src={props.submission.external_url}
+              width="300"
+              height="80"
+              frameBorder="0"
+              allowtransparency="true"
+              allow="encrypted-media"
+            ></iframe>
+          </div>
+        </ul>
+        <ul className="submission-info small-5 show-for-small-only columns">
+          <li className="submission-name show-for-small-only">{props.submission.name}</li>
+          <li className="submission-details show-for-small-only">
             {props.submission.album} | {props.submission.artists}
           </li>
         </ul>
-        { submissionBtnArea }
       </div>
       <div className="submission-user-content row align-top">
         <div className="submission-edit small-2 columns">
