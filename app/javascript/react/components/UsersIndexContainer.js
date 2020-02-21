@@ -73,7 +73,7 @@ const UsersIndexContainer = (props) => {
     }
 
     return(
-      <li key={user.id} className="category-listing row align-middle">
+      <li key={user.id} className="category-listing user-item row align-middle">
         <UserListTile
           user={user}
           handleMembershipClick={handleMembershipClick}
@@ -86,9 +86,9 @@ const UsersIndexContainer = (props) => {
     <div className="center-column">
       <h1>All Users</h1>
       <ul>
-        <li className="category-listing row align-bottom">
-          <div className="header-col small-5 medium-7 columns">Username</div>
-          <div className="header-col submission-col small-4 medium-3 columns">Submissions</div>
+        <li className="category-listing user-item row align-bottom">
+          <div className="header-col small-8 medium-7 columns">Username</div>
+          <div className="header-col submission-col medium-3 columns hide-for-small-only">Submissions</div>
           <div className="header-col member-col small-3 medium-2 columns">
             Member
           </div>
