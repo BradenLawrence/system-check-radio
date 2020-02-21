@@ -76,7 +76,7 @@ const PlaylistIndexContainer = (props) => {
 
   const searchResultsList = searchResults.map(result => {
     return(
-      <li key={result.id} className="small-8 columns">
+      <li key={result.id} className="small-12 medium-8 columns">
         <SearchResultTile
           result={result}
           handleCreateSubmission={handleCreateSubmission}
