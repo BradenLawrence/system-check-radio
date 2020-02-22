@@ -26,7 +26,9 @@ const PlaylistIndexContainer = (props) => {
     .then(json => {
       if(json) {
         setPlaylist(json)
-        setSubmissions(json.submissions)
+        setSubmissions(json.submissions.sort((a, b) => {
+          return b.vote_total - a.vote_total
+        }))
       } else {
         setPlaylist(defaultPlaylist)
       }
@@ -120,11 +122,14 @@ const PlaylistIndexContainer = (props) => {
   const updateSubmission = (updated_submission) => {
     let subToUpdate = submissions.find(sub => sub.id === updated_submission.id)
     let indexToUpdate = submissions.indexOf(subToUpdate)
-    setSubmissions([
+    let updatedSubmissions = [
       ...submissions.slice(0, indexToUpdate),
       updated_submission,
       ...submissions.slice(indexToUpdate+1)
-    ])
+    ]
+    setSubmissions(updatedSubmissions.sort((a, b) => {
+      return b.vote_total - a.vote_total
+    }))
   }
 
   const removeSubmission = (removed_submission) => {
