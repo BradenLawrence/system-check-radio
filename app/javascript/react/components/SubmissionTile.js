@@ -195,6 +195,15 @@ const SubmissionTile = (props) => {
     )
   }
 
+  let errorDisplay
+  if(errors.length > 0) {
+    errorDisplay = (
+      <ul className="errors">
+        { errors }
+      </ul>
+    )
+  }
+
   let voteArea
   if(editEnabled) {
     voteArea = (
@@ -222,9 +231,7 @@ const SubmissionTile = (props) => {
 
   return(
     <div className="category-listing track">
-      <ul className="errors">
-        { errors }
-      </ul>
+      { errorDisplay }
       <div className="row align-middle align-center">
         { voteArea }
         <div className="play-wrapper small-2 medium-2 row align-center">
