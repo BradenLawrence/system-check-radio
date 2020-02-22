@@ -256,7 +256,7 @@ ul.login-section {
     color: white;
     font-weight: bold;
   }
-  .name-col, .submission-col, .date-col, .text-col {
+  .name-col, .submission-col, .date-col, .text-col, .score-col {
     color: white;
     a {
       color: white;
@@ -264,6 +264,9 @@ ul.login-section {
   }
   .submission-col, .member-col {
     text-align: center;
+  }
+  .score-col {
+    text-align: right;
   }
   .category-empty {
     color: white;

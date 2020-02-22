@@ -34,8 +34,11 @@ const UsersShowContainer = (props) => {
     submissionList = user.submissions.map(sub => {
       return(
         <li key={ sub.id } className="category-listing user-item row align-bottom">
-          <div className="name-col small-8 medium-9 columns">
+          <div className="name-col small-5 medium-7 columns">
             { sub.name }
+          </div>
+          <div className="score-col small-3 medium-2 columns">
+            { sub.vote_total }
           </div>
           <div className="date-col small-4 medium-3 columns">
             { sub.updated_at }
@@ -87,12 +90,12 @@ const UsersShowContainer = (props) => {
             <div className="header-col small-4 columns">Role:</div>
             <div className="text-col small-8 columns">{ user.role }</div>
           </li>
-
         </ul>
         <h2>Submissions</h2>
         <ul>
           <li className="category-listing user-item row align-bottom">
-            <div className="header-col small-8 medium-9 columns">Song</div>
+            <div className="header-col small-5 medium-7 columns">Song</div>
+            <div className="header-col score-col small-3 medium-2 columns">Score</div>
             <div className="header-col date-col small-4 medium-3 columns">Date</div>
           </li>
           { submissionList }
