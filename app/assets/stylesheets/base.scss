@@ -31,10 +31,6 @@
   }
 }
 
-nav {
-  margin-bottom: 2vh;
-}
-
 form.new_user > div > label {
   color: white;
 }
@@ -60,10 +56,8 @@ ul.login-section {
 }
 
 .center-column {
-  margin-top: 2vh;
-  padding: 1vh 1vw;
+  padding: 1vh 0;
   background-color: $blue5;
-  border-radius: .25rem;
   h1 {
     text-align: center;
     color: white;
@@ -79,12 +73,9 @@ ul.login-section {
     margin-left: auto;
     margin-right: auto;
   }
-  form {
-    margin: 0 3vw;
-  }
   iframe {
-    margin: 0 3vw;
-    width: calc(100% - 6vw);
+    margin: 0;
+    width: 100%;
   }
 }
 
@@ -93,8 +84,6 @@ ul.login-section {
 }
 
 .category-listing {
-  margin: 0 3vw;
-  border-bottom: 2px solid $blue5;
   background: rgb(0,0,0);
   background: linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(52,42,44,1) 100%);
   .submission-delete {
@@ -374,14 +363,26 @@ ul.login-section {
 }
 
 @media only screen and (min-width: 640px) {
+  nav {
+    margin-bottom: 2vh;
+  }
   .center-column {
     width: 75vw;
     margin: 0 auto;
+    border-radius: .25rem;
+    padding: 1vh 1vw;
+    .category-listing {
+      margin: 0 3vw;
+      border-bottom: 2px solid $blue5;
+    }
+    form {
+      margin: 1vh 3vw;
+    }
+    iframe {
+      margin: 0 3vw;
+      width: calc(100% - 6vw);
+    }
   }
-  // .search > div > input[type="text"] {
-  //   padding: 0 2vw;
-  //   margin-bottom: 0;
-  // }
 }
 
 .errors, .flash {
