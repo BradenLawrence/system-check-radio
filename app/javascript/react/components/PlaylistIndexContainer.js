@@ -91,6 +91,15 @@ const PlaylistIndexContainer = (props) => {
     )
   })
 
+  let searchResultDisplay
+  if(searchResults.length > 0) {
+    searchResultDisplay = (
+      <ul className="row align-center">
+        { searchResultsList }
+      </ul>
+    )
+  }
+
   let playerDisplay
   if(playerSource !== "") {
     playerDisplay = (
@@ -147,9 +156,7 @@ const PlaylistIndexContainer = (props) => {
         { errors }
       </ul>
       { searchBarDisplay }
-      <ul className="row align-center">
-        { searchResultsList }
-      </ul>
+      { searchResultDisplay }
       { playerDisplay }
       <ul className="submission-list">
         { submissionList }

@@ -9,10 +9,9 @@
   <%= csrf_meta_tags %>
 </head>
 <body class="full-page">
-
   <nav class="top-bar row align-justify medium-unstack">
     <h1 class="small-12 medium-3 columns"><a href="/">System Check Radio</a></h1>
-    <section class="top-bar-links small-12 medium-6 columns">
+    <section class="top-bar-links small-12 medium-4 columns">
       <ul class="top-bar-nav">
         <%- if current_user && current_user.role == "admin" -%>
         <li>
@@ -21,7 +20,7 @@
         <%- end -%>
       </ul>
     </section>
-    <section class="small-12 medium-3 columns">
+    <section class="small-12 medium-5 columns">
       <ul class="login-section">
         <%- if current_user -%>
           <li>
