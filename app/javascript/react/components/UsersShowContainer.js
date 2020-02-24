@@ -2,13 +2,32 @@ import React, { useState, useEffect } from "react"
 
 const UsersShowContainer = (props) => {
   const defaultUser = {
+    id: null,
     name: "",
     submissions: []
   }
   const [user, setUser] = useState(defaultUser)
+  const [currentUser, setCurrentUser] = useState(defaultUser)
   const [errors, setErrors] = useState([])
 
   useEffect(() => {
+    fetch("/api/v1/users/current")
+    .then(response => {
+      if(response.ok) {
+        return response.json()
+      } else {
+        throw new Error(response.status + ": " + response.statusText)
+      }
+    })
+    .then(json => {
+      if(json) {
+        setCurrentUser(json)
+      } else {
+        setCurrentUser(defaultUser)
+      }
+    })
+    .catch(error => console.error("Error fetching current user: " + error.message))
+
     fetch(`/api/v1${props.location.pathname}`)
     .then(response => {
       if(response.ok) {
@@ -48,7 +67,7 @@ const UsersShowContainer = (props) => {
     })
   } else {
     let authorDisplay
-    if(user.isCurrentUser) {
+    if(currentUser.id === Number(props.match.params.id)) {
       authorDisplay = "You have"
     } else {
       authorDisplay = user.name + " has"
