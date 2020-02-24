@@ -65,7 +65,6 @@ RSpec.describe Api::V1::UsersController, type: :controller do
       expect(returned_json.class).to eq(Hash)
       expect(returned_json["name"]).to eq(user1.name)
       expect(returned_json["email"]).to eq(user1.email)
-      expect(returned_json["isCurrentUser"]).to eq(false)
       expect(returned_json["submissions"].length).to eq(1)
       expect(returned_json["submissions"].first["name"]).to eq("Africa")
     end
@@ -81,7 +80,6 @@ RSpec.describe Api::V1::UsersController, type: :controller do
       expect(returned_json.class).to eq(Hash)
       expect(returned_json["name"]).to eq(user1.name)
       expect(returned_json["email"]).to eq(user1.email)
-      expect(returned_json["isCurrentUser"]).to eq(true)
       expect(returned_json["submissions"].length).to eq(1)
       expect(returned_json["submissions"].first["name"]).to eq("Africa")
     end
