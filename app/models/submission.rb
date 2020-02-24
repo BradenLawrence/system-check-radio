@@ -8,6 +8,7 @@ class Submission < ApplicationRecord
   validates :name, presence: true
   validates :preview_url, presence: true
   validates :track_id, presence: true
+  validates :vote_total, presence: true, numericality: { only_integer: true }
 
   has_many :votes
 
