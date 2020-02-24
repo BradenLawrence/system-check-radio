@@ -3,7 +3,7 @@ class Api::V1::VotesController < ApplicationController
 
   def show
     submission = show_params.first
-    user = show_params.last
+    user = current_user.id
     render json: Vote.find_or_create_by(
       submission_id: submission,
       user_id: user
