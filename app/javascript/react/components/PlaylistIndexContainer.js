@@ -36,27 +36,29 @@ const PlaylistIndexContainer = (props) => {
         setUser(defaultUser)
       }
     })
-    .catch(error => console.error("Error fetching current user: " + error.message))
-
-    fetch(`/api/v1${props.match.path}`)
-    .then(response => {
-      if(response.ok) {
-        return response.json()
-      } else {
-        throw new Error(response.status + ": " + response.statusText)
-      }
-    })
-    .then(json => {
-      if(json) {
-        setPlaylist(json)
-        setSubmissions(json.submissions.sort((a, b) => {
-          return b.vote_total - a.vote_total
-        }))
-      } else {
-        setPlaylist(defaultPlaylist)
-      }
-    })
-    .catch(error => console.error("Error searching tracks: " + error.message))
+    .then(
+      fetch(`/api/v1${props.match.path}`)
+      .then(response => {
+        if(response.ok) {
+          return response.json()
+        } else {
+          throw new Error(response.status + ": " + response.statusText)
+        }
+      })
+      .then(json => {
+        if(json) {
+          setPlaylist(json)
+          setSubmissions(json.submissions.sort((a, b) => {
+            return b.vote_total - a.vote_total
+          }))
+        } else {
+          setPlaylist(defaultPlaylist)
+        }
+      })
+      .catch(error => console.error(
+        "Error fetching user or playlist: " + error.message
+      ))
+    )
   }, [])
 
   const handleSearchResults = (results) => {
@@ -93,7 +95,7 @@ const PlaylistIndexContainer = (props) => {
       if(json.errors) {
         setErrors(json.errors)
       } else {
-        setSubmissions(submissions.concat(json))
+        setSubmissions([json, ...submissions])
         setSearchResults([])
       }
     })
