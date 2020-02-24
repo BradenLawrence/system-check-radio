@@ -1,6 +1,15 @@
 class Api::V1::VotesController < ApplicationController
   protect_from_forgery unless: -> { request.format.json? }
 
+  def show
+    submission = show_params.first
+    user = show_params.last
+    render json: Vote.find_or_create_by(
+      submission_id: submission,
+      user_id: user
+    )
+  end
+
   def create
     if current_user.member
       voteData = vote_params
@@ -10,7 +19,9 @@ class Api::V1::VotesController < ApplicationController
         submission: Submission.find(voteData["submission_id"])
       )
       if vote.save
-        render json: vote.submission
+        updated_submission = update_total_votes(vote)
+        update_top_submission(vote)
+        render json: updated_submission
       else
         render json: { errors: vote.errors.full_messages }
       end
@@ -30,9 +41,10 @@ class Api::V1::VotesController < ApplicationController
       else
         vote.value = voteData["value"].to_i
       end
-
       if vote.save
-        render json: vote.submission
+        updated_submission = update_total_votes(vote)
+        update_top_submission(vote)
+        render json: updated_submission
       else
         render json: { errors: vote.errors }
       end
@@ -43,7 +55,32 @@ class Api::V1::VotesController < ApplicationController
 
   private
 
+  def show_params
+    params.require([:submission_id, :id])
+  end
+
   def vote_params
     params.require(:voteData).permit(:value, :submission_id)
+  end
+
+  def update_total_votes(vote)
+    sub = vote.submission
+    sub.vote_total = sub.votes.reduce(0) {|total, vote| total + vote.value}
+    if sub.save
+      return sub
+    else
+      return { errors: ["Error updating vote total"] }
+    end
+  end
+
+  def update_top_submission(vote)
+    playlist = vote.submission.playlist
+    top_submission = playlist.submissions.max_by {|sub| sub.vote_total}
+    playlist.top_submission = top_submission.id
+    if playlist.save
+      return playlist
+    else
+      return { errors: ["Error updating playlist"] }
+    end
   end
 end

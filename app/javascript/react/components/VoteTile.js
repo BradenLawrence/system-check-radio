@@ -1,25 +1,33 @@
-import React from "react"
+import React, { useState } from "react"
 
 const VoteTile = (props) => {
-  const voteId = props.submission.currentUserVote.id
-  const voteValue = props.submission.currentUserVote.value
-  const upvoteState = voteValue === 1 ? "active" : "inactive"
-  const downvoteState = voteValue === -1 ? "active" : "inactive"
+  const voteId = props.userVote.id
+  const voteValue = props.userVote.value
+  const [upvoteActive, setUpvoteActive] = useState(voteValue === 1)
+  const [downvoteActive, setDownvoteActive] = useState(voteValue === -1)
 
   const handleClick = (event) => {
     event.preventDefault()
-    props.handleVoteChange(event.currentTarget.value, voteId)
+    let change = event.currentTarget.value
+    props.handleVoteChange(change, voteId)
+    if(change === "1") {
+      setUpvoteActive(!upvoteActive)
+      setDownvoteActive(false)
+    } else {
+      setDownvoteActive(!downvoteActive)
+      setUpvoteActive(false)
+    }
   }
 
   let upvoteDisplay
   let downvoteDisplay
-  if(props.submission.isMember) {
+  if(props.user.member && props.editActive) {
     upvoteDisplay = (
       <button
         name="upvote"
         value="1"
         onClick={handleClick}
-        className={`upvote ${upvoteState}`}
+        className={`upvote ${upvoteActive ? "active" : "inactive"}`}
       >
         <i className="fa fa-caret-up"></i>
       </button>
@@ -29,7 +37,7 @@ const VoteTile = (props) => {
         name="downvote"
         value="-1"
         onClick={handleClick}
-        className={`downvote ${downvoteState}`}
+        className={`downvote ${downvoteActive ? "active" : "inactive"}`}
       >
         <i className="fa fa-caret-down"></i>
       </button>
