@@ -3,31 +3,11 @@ class Api::V1::VotesController < ApplicationController
 
   def show
     submission = show_params.first
-    user = show_params.last
+    user = current_user.id
     render json: Vote.find_or_create_by(
       submission_id: submission,
       user_id: user
     )
-  end
-
-  def create
-    if current_user.member
-      voteData = vote_params
-      vote = Vote.new(
-        value: voteData["value"],
-        user: current_user,
-        submission: Submission.find(voteData["submission_id"])
-      )
-      if vote.save
-        updated_submission = update_total_votes(vote)
-        update_top_submission(vote)
-        render json: updated_submission
-      else
-        render json: { errors: vote.errors.full_messages }
-      end
-    else
-      render json: { errors: ["You must be an active member to vote"] }
-    end
   end
 
   def update

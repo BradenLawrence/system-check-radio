@@ -1,22 +1,18 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 
 const VoteTile = (props) => {
-  const voteId = props.userVote.id
-  const voteValue = props.userVote.value
-  const [upvoteActive, setUpvoteActive] = useState(voteValue === 1)
-  const [downvoteActive, setDownvoteActive] = useState(voteValue === -1)
+  const [upvoteActive, setUpvoteActive] = useState(false)
+  const [downvoteActive, setDownvoteActive] = useState(false)
+
+  useEffect(() => {
+    setUpvoteActive(props.userVote.value === 1)
+    setDownvoteActive(props.userVote.value === -1)
+  }, [props.userVote.value])
 
   const handleClick = (event) => {
     event.preventDefault()
     let change = event.currentTarget.value
-    props.handleVoteChange(change, voteId)
-    if(change === "1") {
-      setUpvoteActive(!upvoteActive)
-      setDownvoteActive(false)
-    } else {
-      setDownvoteActive(!downvoteActive)
-      setUpvoteActive(false)
-    }
+    props.handleVoteChange(change, props.userVote.id)
   }
 
   let upvoteDisplay

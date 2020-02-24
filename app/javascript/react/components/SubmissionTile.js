@@ -8,18 +8,20 @@ const SubmissionTile = (props) => {
   const [errors, setErrors] = useState([])
 
   useEffect(() => {
-    fetch(`/api/v1/submissions/${props.submission.id}/votes/${props.user.id}`)
-    .then(response => {
-      if(response.ok) {
-        return response.json()
-      } else {
-        throw new Error(response.status + ": " + response.statusText)
-      }
-    })
-    .then(json => {
-      setUserVote(json)
-    })
-    .catch(error => console.error("Error fetching vote: " + error.message))
+    if(props.user.member) {
+      fetch(`/api/v1/submissions/${props.submission.id}/votes/${props.user.id}`)
+      .then(response => {
+        if(response.ok) {
+          return response.json()
+        } else {
+          throw new Error(response.status + ": " + response.statusText)
+        }
+      })
+      .then(json => {
+        setUserVote(json)
+      })
+      .catch(error => console.error("Error fetching vote: " + error.message))
+    }
   }, [])
 
   const handleInputChange = (event) => {
@@ -118,6 +120,8 @@ const SubmissionTile = (props) => {
       if(updatedSubmission.errors) {
         setErrors(updatedSubmission.errors)
       } else {
+        let updatedVote = updatedSubmission.votes.find(vote => vote.id === id)
+        setUserVote(updatedVote)
         props.updateSubmission(updatedSubmission)
       }
     })
