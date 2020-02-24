@@ -2,8 +2,14 @@ require 'rails_helper'
 
 RSpec.describe Api::V1::PlaylistsController, type: :controller do
   describe "GET#index" do
-    let!(:playlist1) { Playlist.create(name: "Technofolk")}
-    let!(:playlist2) { Playlist.create(name: "Heavy Metal Jazz")}
+    let!(:playlist1) { Playlist.create(
+      name: "Technofolk",
+      compilation: false
+    )}
+    let!(:playlist2) { Playlist.create(
+      name: "Heavy Metal Jazz",
+      compilation: false
+    )}
     let!(:user1) { FactoryBot.create(:user) }
     let!(:submission1) { Submission.create(
       name: "Africa",
