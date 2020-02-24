@@ -9,6 +9,7 @@ Rails.application.routes.draw do
     namespace "v1" do
       resources :playlists, only: [:index]
       resources :submissions, only: [:create, :update, :destroy]
+      get "/users/current", to: "users#current"
       resources :users, only: [:index, :show, :update]
       resources :votes, only: [:create, :update]
       post "/songs", to: "songs#search"
