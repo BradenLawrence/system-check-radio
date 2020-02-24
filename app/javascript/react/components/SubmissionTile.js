@@ -1,10 +1,26 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import VoteTile from "./VoteTile"
 
 const SubmissionTile = (props) => {
   const [descriptionInput, setDescriptionInput] = useState(props.submission.description)
+  const [userVote, setUserVote] = useState({})
   const [editEnabled, setEditEnabled] = useState(false)
   const [errors, setErrors] = useState([])
+
+  useEffect(() => {
+    fetch(`/api/v1/submissions/${props.submission.id}/votes/${props.user.id}`)
+    .then(response => {
+      if(response.ok) {
+        return response.json()
+      } else {
+        throw new Error(response.status + ": " + response.statusText)
+      }
+    })
+    .then(json => {
+      setUserVote(json)
+    })
+    .catch(error => console.error("Error fetching vote: " + error.message))
+  }, [])
 
   const handleInputChange = (event) => {
     setDescriptionInput(event.currentTarget.value)
@@ -77,72 +93,44 @@ const SubmissionTile = (props) => {
   }
 
   const handleVoteChange = (value, id) => {
-    if(props.submission.currentUserVote.id) {
-      fetch(`/api/v1/votes/${id}`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-          "Accept": "application/json"
-        },
-        body: JSON.stringify({
-          voteData: {
-            id: id,
-            value: value,
-            submission_id: props.submission.id
-          }
-        })
-      })
-      .then(response => {
-        if(response.ok) {
-          return response.json()
-        } else {
-          throw new Error(response.status + ": " + response.statusText)
+    fetch(`/api/v1/submissions/${props.submission.id}/votes/${id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      },
+      body: JSON.stringify({
+        voteData: {
+          id: id,
+          value: value,
+          submission_id: props.submission.id
         }
       })
-      .then(updatedSubmission => {
-        if(updatedSubmission.errors) {
-          setErrors(updatedSubmission.errors)
-        } else {
-          props.updateSubmission(updatedSubmission)
-        }
-      })
-      .catch(error => console.error("Error modifying vote: " + error.message))
-    } else {
-      fetch(`/api/v1/votes`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Accept": "application/json"
-        },
-        body: JSON.stringify({
-          voteData: {
-            value: value,
-            submission_id: props.submission.id
-          }
-        })
-      })
-      .then(response => {
-        if(response.ok) {
-          return response.json()
-        } else {
-          throw new Error(response.status + ": " + response.statusText)
-        }
-      })
-      .then(updatedSubmission => {
-        if(updatedSubmission.errors) {
-          setErrors(updatedSubmission.errors)
-        } else {
-          props.updateSubmission(updatedSubmission)
-        }
-      })
-      .catch(error => console.error("Error creating vote: " + error.message))
-    }
+    })
+    .then(response => {
+      if(response.ok) {
+        return response.json()
+      } else {
+        throw new Error(response.status + ": " + response.statusText)
+      }
+    })
+    .then(updatedSubmission => {
+      if(updatedSubmission.errors) {
+        setErrors(updatedSubmission.errors)
+      } else {
+        props.updateSubmission(updatedSubmission)
+      }
+    })
+    .catch(error => console.error("Error modifying vote: " + error.message))
   }
 
   const editButtonState = editEnabled ? "edit-active" : "edit-inactive"
 
   let editButton
-  if(props.submission.isCurrentUser || props.submission.isAdmin) {
+  if(
+    (props.user.id === props.submission.author.id && props.editActive)
+    || props.user.role === "admin"
+  ) {
     editButton = (
       <div className="submission-edit small-2 columns">
         <button
@@ -157,10 +145,10 @@ const SubmissionTile = (props) => {
   }
 
   let author
-  if(props.submission.isCurrentUser) {
+  if(props.user.id === props.submission.author.id) {
     author = "You"
   } else {
-    author = props.submission.author
+    author = props.submission.author.name
   }
 
   let descriptionArea
@@ -217,6 +205,9 @@ const SubmissionTile = (props) => {
     voteArea = (
       <div className="submission-vote small-2 columns">
         <VoteTile
+          editActive={props.editActive}
+          user={props.user}
+          userVote={userVote}
           submission={props.submission}
           handleVoteChange={handleVoteChange}
         />

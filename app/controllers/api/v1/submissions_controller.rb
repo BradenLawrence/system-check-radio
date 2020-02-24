@@ -11,7 +11,7 @@ class Api::V1::SubmissionsController < ApplicationController
     end
     unless error_list.length > 0
       submission = Submission.new(submission_params)
-      submission.playlist = Playlist.last
+      submission.playlist = Playlist.where(compilation: false).last
       submission.user = current_user
       if submission.save
         render json: submission

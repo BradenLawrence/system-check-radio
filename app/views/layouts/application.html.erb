@@ -9,18 +9,9 @@
   <%= csrf_meta_tags %>
 </head>
 <body class="full-page">
-  <nav class="top-bar row align-justify medium-unstack">
-    <h1 class="small-12 medium-3 columns"><a href="/">System Check Radio</a></h1>
-    <section class="top-bar-links small-12 medium-4 columns">
-      <ul class="top-bar-nav">
-        <%- if current_user && current_user.role == "admin" -%>
-        <li>
-          <%= link_to 'Users', users_path %>
-        </li>
-        <%- end -%>
-      </ul>
-    </section>
-    <section class="small-12 medium-5 columns">
+  <nav class="top-bar row medium-unstack">
+    <h1 class="small-12 medium-6 columns"><a href="/">System Check Radio</a></h1>
+    <section class="small-12 medium-6 columns">
       <ul class="login-section">
         <%- if current_user -%>
           <li>
@@ -31,6 +22,23 @@
           <li><%= link_to 'Sign Up', new_user_registration_path %></li>
           <li><%= link_to 'Sign In', new_user_session_path %></li>
         <%- end -%>
+      </ul>
+    </section>
+  </nav>
+  <nav class="link-bar row medium-unstack">
+    <section class="small-12 columns">
+      <ul class="top-bar-nav">
+        <%- if current_user && current_user.role == "admin" -%>
+        <li>
+          <%= link_to 'Users', users_path %>
+        </li>
+        <%- end -%>
+        <li>
+          <%= link_to 'This week', playlists_path %>
+        </li>
+        <li>
+          <%= link_to 'Greatest hits', playlists_hits_path %>
+        </li>
       </ul>
     </section>
   </nav>

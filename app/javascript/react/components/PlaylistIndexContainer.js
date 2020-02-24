@@ -8,14 +8,37 @@ const PlaylistIndexContainer = (props) => {
     name: "",
     submissions: []
   }
+  const defaultUser = {
+    name: "",
+    role: null,
+    member: false
+  }
   const [playlist, setPlaylist] = useState(defaultPlaylist)
+  const [user, setUser] = useState(defaultUser)
   const [playerSource, setPlayerSource] = useState("")
   const [submissions, setSubmissions] = useState([])
   const [searchResults, setSearchResults] = useState([])
   const [errors, setErrors] = useState([])
 
   useEffect(() => {
-    fetch("/api/v1/playlists")
+    fetch("/api/v1/users/current")
+    .then(response => {
+      if(response.ok) {
+        return response.json()
+      } else {
+        throw new Error(response.status + ": " + response.statusText)
+      }
+    })
+    .then(json => {
+      if(json) {
+        setUser(json)
+      } else {
+        setUser(defaultUser)
+      }
+    })
+    .catch(error => console.error("Error fetching current user: " + error.message))
+
+    fetch(`/api/v1${props.match.path}`)
     .then(response => {
       if(response.ok) {
         return response.json()
@@ -78,7 +101,7 @@ const PlaylistIndexContainer = (props) => {
   }
 
   let searchBarDisplay
-  if(playlist.isMember) {
+  if(user.member && !playlist.compilation) {
     searchBarDisplay = <SearchBar handleSearchResults={handleSearchResults} />
   }
 
@@ -145,6 +168,8 @@ const PlaylistIndexContainer = (props) => {
     return(
       <li key={sub.id}>
         <SubmissionTile
+          editActive={!playlist.compilation}
+          user={user}
           submission={sub}
           playSubmission={playSubmission}
           updateSubmission={updateSubmission}
