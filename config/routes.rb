@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  root "static_pages#index"
+  root to: redirect("/playlists")
   devise_for :users
 
   get "/playlists", to: "static_pages#index"
