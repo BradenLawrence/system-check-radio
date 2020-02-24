@@ -10,6 +10,7 @@ export const App = () => {
     <BrowserRouter>
       <Switch>
         <Route exact path="/playlists" component={PlaylistIndexContainer}/>
+        <Route exact path="/playlists/hits" component={PlaylistIndexContainer}/>
         <Route exact path="/users" component={UsersIndexContainer}/>
         <Route exact path="/users/:id" component={UsersShowContainer}/>
       </Switch>
