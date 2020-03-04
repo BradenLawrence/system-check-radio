@@ -3,7 +3,7 @@ import SearchBar from "./SearchBar"
 import SearchResultTile from "./SearchResultTile"
 import SubmissionTile from "./SubmissionTile"
 import {
-  fetchUser,
+  fetchCurrentUser,
   fetchPlaylist,
   postSubmission
 } from "../../helpers/fetch_helpers"
@@ -26,7 +26,7 @@ const PlaylistIndexContainer = (props) => {
   const [errors, setErrors] = useState([])
 
   useEffect(() => {
-    fetchUser()
+    fetchCurrentUser()
     .then(response => {
       if(response) {
         setUser(response)
