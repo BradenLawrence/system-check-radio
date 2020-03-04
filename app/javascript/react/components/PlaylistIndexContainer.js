@@ -2,6 +2,11 @@ import React, { useState, useEffect } from "react"
 import SearchBar from "./SearchBar"
 import SearchResultTile from "./SearchResultTile"
 import SubmissionTile from "./SubmissionTile"
+import {
+  fetchUser,
+  fetchPlaylist,
+  postSubmission
+} from "../../helpers/fetch_helpers"
 
 const PlaylistIndexContainer = (props) => {
   const defaultPlaylist = {
@@ -21,43 +26,26 @@ const PlaylistIndexContainer = (props) => {
   const [errors, setErrors] = useState([])
 
   useEffect(() => {
-    fetch("/api/v1/users/current")
+    fetchUser()
     .then(response => {
-      if(response.ok) {
-        return response.json()
-      } else {
-        throw new Error(response.status + ": " + response.statusText)
-      }
-    })
-    .then(json => {
-      if(json) {
-        setUser(json)
+      if(response) {
+        setUser(response)
       } else {
         setUser(defaultUser)
       }
     })
     .then(
-      fetch(`/api/v1${props.match.path}`)
+      fetchPlaylist(props.match.path)
       .then(response => {
-        if(response.ok) {
-          return response.json()
-        } else {
-          throw new Error(response.status + ": " + response.statusText)
-        }
-      })
-      .then(json => {
-        if(json) {
-          setPlaylist(json)
-          setSubmissions(json.submissions.sort((a, b) => {
+        if(response) {
+          setPlaylist(response)
+          setSubmissions(response.submissions.sort((a, b) => {
             return b.vote_total - a.vote_total
           }))
         } else {
           setPlaylist(defaultPlaylist)
         }
       })
-      .catch(error => console.error(
-        "Error fetching user or playlist: " + error.message
-      ))
     )
   }, [])
 
@@ -66,40 +54,15 @@ const PlaylistIndexContainer = (props) => {
   }
 
   const handleCreateSubmission = (submissionData) => {
-    let body = new FormData()
-    body.append("submissionData[album]", submissionData.album)
-    body.append("submissionData[artists]", submissionData.artists.join(", "))
-    body.append("submissionData[description]", submissionData.description)
-    body.append("submissionData[duration_ms]", submissionData.duration_ms)
-    body.append("submissionData[external_url]", submissionData.external_url)
-    body.append("submissionData[image]", submissionData.image)
-    body.append("submissionData[name]", submissionData.name)
-    body.append("submissionData[preview_url]", submissionData.preview_url)
-    body.append("submissionData[track_id]", submissionData.id)
-    fetch("/api/v1/submissions", {
-      method: "POST",
-      credentials: "same-origin",
-      headers: {
-        "Accept": "application/json"
-      },
-      body: body
-    })
+    postSubmission(submissionData)
     .then(response => {
-      if(response.ok) {
-        return response.json()
+      if(response.errors) {
+        setErrors(response.errors)
       } else {
-        throw new Error(response.status + ": " + response.statusText)
-      }
-    })
-    .then(json => {
-      if(json.errors) {
-        setErrors(json.errors)
-      } else {
-        setSubmissions([json, ...submissions])
+        setSubmissions([response, ...submissions])
         setSearchResults([])
       }
     })
-    .catch(error => console.error("Error searching tracks: " + error.message))
   }
 
   let searchBarDisplay
