@@ -1,19 +1,13 @@
 import React, { useState, useEffect } from "react"
 import UserListTile from "./UserListTile"
+import { fetchUsers, updateUserMembership } from "../../helpers/fetch_helpers"
 
 const UsersIndexContainer = (props) => {
   const [users, setUsers] = useState([])
   const [errors, setErrors] = useState([])
 
   useEffect(() => {
-    fetch("/api/v1/users")
-    .then(response => {
-      if(response.ok) {
-        return response.json()
-      } else {
-        throw new Error(response.status + ": " + response.statusText)
-      }
-    })
+    fetchUsers()
     .then(json => {
       if(json.errors) {
         setErrors([...json.errors])
@@ -27,29 +21,10 @@ const UsersIndexContainer = (props) => {
         setUsers([])
       }
     })
-    .catch(error => console.error("Error fetching users: " + error.message))
   }, [])
 
   const setMembershipStatus = (userId, status) => {
-    fetch(`/api/v1/users/${userId}`, {
-      credentials: "same-origin",
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-        "Accept": "application/json"
-      },
-      body: JSON.stringify({
-        id: userId,
-        member: status
-      })
-    })
-    .then(response => {
-      if(response.ok) {
-        return response.json()
-      } else {
-        throw new Error(response.status + ": " + response.statusText)
-      }
-    })
+    updateUserMembership(userId, status)
     .then(updated_user => {
       if(updated_user.errors) {
         setErrors(updated_user.errors)
@@ -64,7 +39,6 @@ const UsersIndexContainer = (props) => {
         setErrors([])
       }
     })
-    .catch(error => console.error("Error updating user: " + error.message))
   }
 
   const userList = users.map(user => {

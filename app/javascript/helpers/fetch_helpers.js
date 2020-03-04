@@ -1,4 +1,42 @@
-const fetchUser = () => {
+const fetchUsers = () => {
+  return(
+    fetch("/api/v1/users")
+    .then(response => {
+      if(response.ok) {
+        return response.json()
+      } else {
+        throw new Error(response.status + ": " + response.statusText)
+      }
+    })
+    .catch(error => console.error("Error fetching users: " + error.message))
+  )
+}
+
+const updateUserMembership = (id, status) => {
+  return(
+    fetch(`/api/v1/users/${userId}`, {
+      credentials: "same-origin",
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      },
+      body: JSON.stringify({
+        id: userId,
+        member: status
+      })
+    })
+    .then(response => {
+      if(response.ok) {
+        return response.json()
+      } else {
+        throw new Error(response.status + ": " + response.statusText)
+      }
+    })
+  )
+}
+
+const fetchCurrentUser = () => {
   return(
     fetch("/api/v1/users/current")
     .then(response => {
@@ -57,7 +95,9 @@ const postSubmission = (submissionData) => {
 }
 
 export {
-  fetchUser,
+  fetchUsers,
+  updateUserMembership,
+  fetchCurrentUser,
   fetchPlaylist,
   postSubmission
 }
