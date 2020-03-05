@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react"
 import VoteTile from "./VoteTile"
+import { fetchVote } from "../../helpers/fetch_helpers"
 
 const SubmissionTile = (props) => {
   const [descriptionInput, setDescriptionInput] = useState(props.submission.description)
@@ -9,18 +10,10 @@ const SubmissionTile = (props) => {
 
   useEffect(() => {
     if(props.user.member) {
-      fetch(`/api/v1/submissions/${props.submission.id}/votes/${props.user.id}`)
-      .then(response => {
-        if(response.ok) {
-          return response.json()
-        } else {
-          throw new Error(response.status + ": " + response.statusText)
-        }
-      })
+      fetchVote(props.submission.id, props.user.id)
       .then(json => {
         setUserVote(json)
       })
-      .catch(error => console.error("Error fetching vote: " + error.message))
     }
   }, [])
 

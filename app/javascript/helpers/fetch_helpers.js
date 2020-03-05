@@ -127,6 +127,18 @@ const postSearchQuery = (query) => {
   .catch(error => console.error("Error searching tracks: " + error.message))
 }
 
+const fetchVote = (submission_id, user_id) => {
+  return fetch(`/api/v1/submissions/${submission_id}/votes/${user_id}`)
+  .then(response => {
+    if(response.ok) {
+      return response.json()
+    } else {
+      throw new Error(response.status + ": " + response.statusText)
+    }
+  })
+  .catch(error => console.error("Error fetching vote: " + error.message))
+}
+
 export {
   fetchUsers,
   fetchUser,
@@ -134,5 +146,6 @@ export {
   fetchCurrentUser,
   fetchPlaylist,
   postSubmission,
-  postSearchQuery
+  postSearchQuery,
+  fetchVote
 }
