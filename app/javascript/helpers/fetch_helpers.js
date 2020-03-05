@@ -106,11 +106,33 @@ const postSubmission = (submissionData) => {
   .catch(error => console.error("Error searching tracks: " + error.message))
 }
 
+const postSearchQuery = (query) => {
+  let body = new FormData()
+  body.append("query[term]", query)
+  return fetch(`/api/v1/songs`, {
+    method: "POST",
+    credentials: "same-origin",
+    headers: {
+      "Accept": "application/json"
+    },
+    body: body
+  })
+  .then(response => {
+    if(response.ok) {
+      return response.json()
+    } else {
+      throw new Error(response.status + ": " + response.statusText)
+    }
+  })
+  .catch(error => console.error("Error searching tracks: " + error.message))
+}
+
 export {
   fetchUsers,
   fetchUser,
   updateUserMembership,
   fetchCurrentUser,
   fetchPlaylist,
-  postSubmission
+  postSubmission,
+  postSearchQuery
 }
