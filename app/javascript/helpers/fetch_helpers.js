@@ -108,6 +108,7 @@ const postSubmission = (submissionData) => {
 
 export {
   fetchUsers,
+  fetchUser,
   updateUserMembership,
   fetchCurrentUser,
   fetchPlaylist,

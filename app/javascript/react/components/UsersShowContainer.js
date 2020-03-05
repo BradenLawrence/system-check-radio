@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react"
-import { fetchCurrentUser } from "../../helpers/fetch_helpers"
+import { fetchCurrentUser, fetchUser } from "../../helpers/fetch_helpers"
 
 const UsersShowContainer = (props) => {
   const defaultUser = {
