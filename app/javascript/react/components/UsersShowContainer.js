@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react"
+import { fetchCurrentUser } from "../../helpers/fetch_helpers"
 
 const UsersShowContainer = (props) => {
   const defaultUser = {
@@ -11,14 +12,7 @@ const UsersShowContainer = (props) => {
   const [errors, setErrors] = useState([])
 
   useEffect(() => {
-    fetch("/api/v1/users/current")
-    .then(response => {
-      if(response.ok) {
-        return response.json()
-      } else {
-        throw new Error(response.status + ": " + response.statusText)
-      }
-    })
+    fetchCurrentUser()
     .then(json => {
       if(json) {
         setCurrentUser(json)
@@ -26,26 +20,18 @@ const UsersShowContainer = (props) => {
         setCurrentUser(defaultUser)
       }
     })
-    .catch(error => console.error("Error fetching current user: " + error.message))
-
-    fetch(`/api/v1${props.location.pathname}`)
-    .then(response => {
-      if(response.ok) {
-        return response.json()
-      } else {
-        throw new Error(response.status + ": " + response.statusText)
-      }
-    })
-    .then(json => {
-      if(json.errors) {
-        setErrors([...json.errors])
-      } else if(json) {
-        setUser(json)
-      } else {
-        setUser(defaultUser)
-      }
-    })
-    .catch(error => console.error("Error fetching user: " + error.message))
+    .then(
+      fetchUser(props.location.pathname)
+      .then(json => {
+        if(json.errors) {
+          setErrors([...json.errors])
+        } else if(json) {
+          setUser(json)
+        } else {
+          setUser(defaultUser)
+        }
+      })
+    )
   }, [])
 
   let submissionList

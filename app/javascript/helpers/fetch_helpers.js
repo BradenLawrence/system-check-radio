@@ -36,6 +36,18 @@ const updateUserMembership = (id, status) => {
   )
 }
 
+const fetchUser = (id) => {
+  return fetch(`/api/v1${id}`)
+  .then(response => {
+    if(response.ok) {
+      return response.json()
+    } else {
+      throw new Error(response.status + ": " + response.statusText)
+    }
+  })
+  .catch(error => console.error("Error fetching user: " + error.message))
+}
+
 const fetchCurrentUser = () => {
   return(
     fetch("/api/v1/users/current")
