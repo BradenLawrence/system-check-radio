@@ -182,6 +182,31 @@ const fetchVote = (submissionId, userId) => {
   .catch(error => console.error("Error fetching vote: " + error.message))
 }
 
+const updateVote = (value, submissionId, voteId) => {
+  return fetch(`/api/v1/submissions/${submissionId}/votes/${voteId}`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      "Accept": "application/json"
+    },
+    body: JSON.stringify({
+      voteData: {
+        id: id,
+        value: value,
+        submission_id: props.submission.id
+      }
+    })
+  })
+  .then(response => {
+    if(response.ok) {
+      return response.json()
+    } else {
+      throw new Error(response.status + ": " + response.statusText)
+    }
+  })
+  .catch(error => console.error("Error modifying vote: " + error.message))
+}
+
 export {
   fetchUsers,
   fetchUser,
@@ -192,5 +217,6 @@ export {
   updateSubmission,
   deleteSubmission,
   postSearchQuery,
-  fetchVote
+  fetchVote,
+  updateVote
 }
