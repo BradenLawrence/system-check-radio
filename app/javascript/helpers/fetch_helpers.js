@@ -191,9 +191,9 @@ const updateVote = (value, submissionId, voteId) => {
     },
     body: JSON.stringify({
       voteData: {
-        id: id,
+        id: voteId,
         value: value,
-        submission_id: props.submission.id
+        submission_id: submissionId
       }
     })
   })

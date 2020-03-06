@@ -3,7 +3,8 @@ import VoteTile from "./VoteTile"
 import {
   fetchVote,
   updateSubmission,
-  deleteSubmission
+  deleteSubmission,
+  updateVote
 } from "../../helpers/fetch_helpers"
 
 const SubmissionTile = (props) => {
@@ -62,7 +63,9 @@ const SubmissionTile = (props) => {
       if(updatedSubmission.errors) {
         setErrors(updatedSubmission.errors)
       } else {
-        let updatedVote = updatedSubmission.votes.find(vote => vote.id === id)
+        let updatedVote = updatedSubmission.votes.find(vote => {
+          return vote.id === voteId
+        })
         setUserVote(updatedVote)
         props.updateSubmission(updatedSubmission)
       }
