@@ -1,5 +1,11 @@
 import React, { useState, useEffect } from "react"
 import VoteTile from "./VoteTile"
+import {
+  fetchVote,
+  updateSubmission,
+  deleteSubmission,
+  updateVote
+} from "../../helpers/fetchHelpers"
 
 const SubmissionTile = (props) => {
   const [descriptionInput, setDescriptionInput] = useState(props.submission.description)
@@ -9,18 +15,10 @@ const SubmissionTile = (props) => {
 
   useEffect(() => {
     if(props.user.member) {
-      fetch(`/api/v1/submissions/${props.submission.id}/votes/${props.user.id}`)
-      .then(response => {
-        if(response.ok) {
-          return response.json()
-        } else {
-          throw new Error(response.status + ": " + response.statusText)
-        }
-      })
+      fetchVote(props.submission.id, props.user.id)
       .then(json => {
         setUserVote(json)
       })
-      .catch(error => console.error("Error fetching vote: " + error.message))
     }
   }, [])
 
@@ -30,26 +28,7 @@ const SubmissionTile = (props) => {
 
   const handleEditSave = (event) => {
     event.preventDefault()
-    fetch(`/api/v1/submissions/${props.submission.id}`, {
-      credentials: "same-origin",
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-        "Accept": "application/json"
-      },
-      body: JSON.stringify({
-        submissionData: {
-          description: descriptionInput
-        }
-      })
-    })
-    .then(response => {
-      if(response.ok) {
-        return response.json()
-      } else {
-        throw new Error(response.status + ": " + response.statusText)
-      }
-    })
+    updateSubmission(props.submission.id)
     .then(updatedSubmission => {
       if(updatedSubmission.errors) {
         setErrors(updatedSubmission.errors)
@@ -58,7 +37,6 @@ const SubmissionTile = (props) => {
         props.updateSubmission(updatedSubmission)
       }
     })
-    .catch(error => console.error("Error searching tracks: " + error.message))
   }
 
   const handleEditToggle = (event) => {
@@ -69,21 +47,7 @@ const SubmissionTile = (props) => {
 
   const handleDelete = (event) => {
     event.preventDefault()
-    fetch(`/api/v1/submissions/${props.submission.id}`, {
-      credentials: "same-origin",
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-        "Accept": "application/json"
-      }
-    })
-    .then(response => {
-      if(response.ok) {
-        return response.json()
-      } else {
-        throw new Error(response.status + ": " + response.statusText)
-      }
-    })
+    deleteSubmission(props.submission.id)
     .then(deleted_submission => {
       if(deleted_submission.errors) {
         setErrors(deleted_submission.errors)
@@ -91,41 +55,21 @@ const SubmissionTile = (props) => {
         props.removeSubmission(deleted_submission)
       }
     })
-    .catch(error => console.error("Error deleting submission: " + error.message))
   }
 
-  const handleVoteChange = (value, id) => {
-    fetch(`/api/v1/submissions/${props.submission.id}/votes/${id}`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-        "Accept": "application/json"
-      },
-      body: JSON.stringify({
-        voteData: {
-          id: id,
-          value: value,
-          submission_id: props.submission.id
-        }
-      })
-    })
-    .then(response => {
-      if(response.ok) {
-        return response.json()
-      } else {
-        throw new Error(response.status + ": " + response.statusText)
-      }
-    })
+  const handleVoteChange = (value, voteId) => {
+    updateVote(value, props.submission.id, voteId)
     .then(updatedSubmission => {
       if(updatedSubmission.errors) {
         setErrors(updatedSubmission.errors)
       } else {
-        let updatedVote = updatedSubmission.votes.find(vote => vote.id === id)
+        let updatedVote = updatedSubmission.votes.find(vote => {
+          return vote.id === voteId
+        })
         setUserVote(updatedVote)
         props.updateSubmission(updatedSubmission)
       }
     })
-    .catch(error => console.error("Error modifying vote: " + error.message))
   }
 
   const editButtonState = editEnabled ? "edit-active" : "edit-inactive"

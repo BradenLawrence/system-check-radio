@@ -1,4 +1,5 @@
 import React, { useState } from "react"
+import { postSearchQuery } from "../../helpers/fetchHelpers"
 
 const SearchBar = (props) => {
   const defaultQuery = {
@@ -20,27 +21,10 @@ const SearchBar = (props) => {
     if(query.term === "") {
       props.handleSearchResults([])
     } else {
-      let body = new FormData()
-      body.append("query[term]", query.term)
-      fetch(`/api/v1/songs`, {
-        method: "POST",
-        credentials: "same-origin",
-        headers: {
-          "Accept": "application/json"
-        },
-        body: body
-      })
-      .then(response => {
-        if(response.ok) {
-          return response.json()
-        } else {
-          throw new Error(response.status + ": " + response.statusText)
-        }
-      })
+      postSearchQuery(query.term)
       .then(json => {
         props.handleSearchResults(json)
       })
-      .catch(error => console.error("Error searching tracks: " + error.message))
     }
   }
 
