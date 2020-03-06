@@ -5,7 +5,7 @@ import {
   updateSubmission,
   deleteSubmission,
   updateVote
-} from "../../helpers/fetch_helpers"
+} from "../../helpers/fetchHelpers"
 
 const SubmissionTile = (props) => {
   const [descriptionInput, setDescriptionInput] = useState(props.submission.description)

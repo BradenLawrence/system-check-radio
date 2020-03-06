@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react"
 import UserListTile from "./UserListTile"
-import { fetchUsers, updateUserMembership } from "../../helpers/fetch_helpers"
+import { fetchUsers, updateUserMembership } from "../../helpers/fetchHelpers"
 
 const UsersIndexContainer = (props) => {
   const [users, setUsers] = useState([])

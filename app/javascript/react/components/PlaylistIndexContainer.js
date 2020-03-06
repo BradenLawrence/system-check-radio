@@ -6,7 +6,7 @@ import {
   fetchCurrentUser,
   fetchPlaylist,
   postSubmission
-} from "../../helpers/fetch_helpers"
+} from "../../helpers/fetchHelpers"
 
 const PlaylistIndexContainer = (props) => {
   const defaultPlaylist = {

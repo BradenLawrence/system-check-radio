@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { postSearchQuery } from "../../helpers/fetch_helpers"
+import { postSearchQuery } from "../../helpers/fetchHelpers"
 
 const SearchBar = (props) => {
   const defaultQuery = {
