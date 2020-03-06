@@ -12,30 +12,6 @@ const fetchUsers = () => {
   )
 }
 
-const updateUserMembership = (id, status) => {
-  return(
-    fetch(`/api/v1/users/${userId}`, {
-      credentials: "same-origin",
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-        "Accept": "application/json"
-      },
-      body: JSON.stringify({
-        id: userId,
-        member: status
-      })
-    })
-    .then(response => {
-      if(response.ok) {
-        return response.json()
-      } else {
-        throw new Error(response.status + ": " + response.statusText)
-      }
-    })
-  )
-}
-
 const fetchUser = (id) => {
   return fetch(`/api/v1${id}`)
   .then(response => {
@@ -51,6 +27,30 @@ const fetchUser = (id) => {
 const fetchCurrentUser = () => {
   return(
     fetch("/api/v1/users/current")
+    .then(response => {
+      if(response.ok) {
+        return response.json()
+      } else {
+        throw new Error(response.status + ": " + response.statusText)
+      }
+    })
+  )
+}
+
+const updateUserMembership = (id, status) => {
+  return(
+    fetch(`/api/v1/users/${userId}`, {
+      credentials: "same-origin",
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      },
+      body: JSON.stringify({
+        id: userId,
+        member: status
+      })
+    })
     .then(response => {
       if(response.ok) {
         return response.json()
@@ -106,6 +106,49 @@ const postSubmission = (submissionData) => {
   .catch(error => console.error("Error searching tracks: " + error.message))
 }
 
+const updateSubmission = (submissionId) => {
+  return fetch(`/api/v1/submissions/${submissionId}`, {
+    credentials: "same-origin",
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      "Accept": "application/json"
+    },
+    body: JSON.stringify({
+      submissionData: {
+        description: descriptionInput
+      }
+    })
+  })
+  .then(response => {
+    if(response.ok) {
+      return response.json()
+    } else {
+      throw new Error(response.status + ": " + response.statusText)
+    }
+  })
+  .catch(error => console.error("Error searching tracks: " + error.message))
+}
+
+const deleteSubmission = (submissionId) => {
+  return fetch(`/api/v1/submissions/${submissionId}`, {
+    credentials: "same-origin",
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+      "Accept": "application/json"
+    }
+  })
+  .then(response => {
+    if(response.ok) {
+      return response.json()
+    } else {
+      throw new Error(response.status + ": " + response.statusText)
+    }
+  })
+  .catch(error => console.error("Error deleting submission: " + error.message))
+}
+
 const postSearchQuery = (query) => {
   let body = new FormData()
   body.append("query[term]", query)
@@ -127,8 +170,8 @@ const postSearchQuery = (query) => {
   .catch(error => console.error("Error searching tracks: " + error.message))
 }
 
-const fetchVote = (submission_id, user_id) => {
-  return fetch(`/api/v1/submissions/${submission_id}/votes/${user_id}`)
+const fetchVote = (submissionId, userId) => {
+  return fetch(`/api/v1/submissions/${submissionId}/votes/${userId}`)
   .then(response => {
     if(response.ok) {
       return response.json()
@@ -142,10 +185,12 @@ const fetchVote = (submission_id, user_id) => {
 export {
   fetchUsers,
   fetchUser,
-  updateUserMembership,
   fetchCurrentUser,
+  updateUserMembership,
   fetchPlaylist,
   postSubmission,
+  updateSubmission,
+  deleteSubmission,
   postSearchQuery,
   fetchVote
 }
